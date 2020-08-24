@@ -4,10 +4,10 @@
       <p class="title">登录</p>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="用户名:" prop="username">
-          <el-input v-model="form.username" placeholder="请输入用户名" value="15867348620"></el-input>
+          <el-input v-model="form.username" placeholder="请输入用户名" ></el-input>
         </el-form-item>
         <el-form-item label="密码:" prop="password">
-          <el-input v-model="form.password" type="password" placeholder="请输入密码" value="123456789"></el-input>
+          <el-input v-model="form.password" type="password" placeholder="请输入密码" ></el-input>
         </el-form-item>
         <!-- <el-button type="text" @click="gotoUser">手机号登录</el-button> -->
 
@@ -22,7 +22,8 @@
 
 
 <script>
-
+  import  {login} from "../util/lang";
+  import  qs from 'qs'
 export default {
   data() {
     return {
@@ -40,10 +41,18 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log('ssss')
-      this.$router.push({
-        path: "/home"
-      });
+      const url = `${login()}`
+      this.$axios.post(url,qs.stringify(this.form)).then(res => {
+        if(res.data.code===200){
+          this.$message({
+            message: '登录成功',
+            type: 'success'
+          });
+          this.$router.push({
+            path: "/pics"
+          });
+        }
+      })
     }
   }
 };

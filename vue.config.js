@@ -1,3 +1,3 @@
 module.exports = {
-    assetsDir: "sunsemwebpc"
+    assetsDir: "./sunsemweb"
 }

@@ -4,7 +4,7 @@
     <el-aside :width="isCollapse ? '65px' : '200px'">
       <el-container>
         <el-header class="logo" :class="{hide_logo:isCollapse}">
-<!--          <img class="logo_img" :class="{hide_logo_img:isCollapse}" src="../assets/logo.png" alt />-->
+          <img class="logo_img" :class="{hide_logo_img:isCollapse}" src="../assets/logo.png" alt />
         </el-header>
         <el-main :class="{aside_main:isCollapse}">
           <el-menu
@@ -27,6 +27,40 @@
               <!-- 文字 -->
               <span class="menu_text">{{item.name}}</span>
             </el-menu-item>
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>订单管理</span>
+              </template>
+              <el-menu-item-group>
+                <template slot="title">分组一</template>
+                <el-menu-item index="1-1">选项1</el-menu-item>
+                <el-menu-item index="1-2">选项2</el-menu-item>
+              </el-menu-item-group>
+              <el-menu-item-group title="分组2">
+                <el-menu-item index="1-3">选项3</el-menu-item>
+              </el-menu-item-group>
+              <el-submenu index="1-4">
+              <template slot="title">选项4</template>
+              <el-menu-item index="1-4-1">选项1</el-menu-item>
+            </el-submenu> </el-submenu>
+            <el-submenu index="2">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>订单管理</span>
+              </template>
+              <el-menu-item-group>
+                <template slot="title">分组一</template>
+                <el-menu-item index="1-1">选项1</el-menu-item>
+                <el-menu-item index="1-2">选项2</el-menu-item>
+              </el-menu-item-group>
+              <el-menu-item-group title="分组2">
+                <el-menu-item index="1-3">选项3</el-menu-item>
+              </el-menu-item-group>
+              <el-submenu index="1-4">
+                <template slot="title">选项4</template>
+                <el-menu-item index="1-4-1">选项1</el-menu-item>
+              </el-submenu> </el-submenu>
           </el-menu>
         </el-main>
       </el-container>
@@ -132,66 +166,7 @@ export default {
           name: "会员管理",
           path: "user",
         }
-
-        // {
-        //   name: "自定义分享",
-        //   path: "share",
-        // },
-        // {
-        //   name: "贸易对接",
-        //   path: "trade",
-        // },
-        // {
-        //   name:'我的邀请',
-        //   path:'invite'
-        // },{
-        //   name:'推广机会',
-        //   path:'extend'
-        // },
-        // {
-        //   name: "置顶助力",
-        //   path: "assist",
-        // },
-        // {
-        //   name: "留言管理",
-        //   path: "leavemsg",
-        // },
-        // {
-        //   name: "点赞管理",
-        //   path: "thumbsup",
-        // },
-        // {
-        //   name: "围观管理",
-        //   path: "watch",
-        // },
-        // {
-        //   name: "分享记录",
-        //   path: "sharerecord",
-        // },
-        // {
-        //   name: "我的信息",
-        //   path: "mymsg",
-        // },
-        // {
-        //   name:'我的案例',
-        //   path:'mycase'
-        // },
-        // {
-        //   name: "账号绑定",
-        //   path: "account",
-        // },
-      ],
-      options: [
-        {
-          value: "0",
-          label: "重庆电子行业智能制造年会暨中研电子智",
-        },
-        {
-          value: "1",
-          label: "中研电子智造线上展厅",
-        },
-      ],
-      value: "",
+      ]
     };
   },
   components: { Contact },
@@ -244,6 +219,7 @@ export default {
 .el-aside {
   background-color: #001529;
   color: white;
+  transition: all 600ms;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
@@ -275,16 +251,13 @@ export default {
 .logo {
   text-align: center;
   background-color: #002140;
-}
-.hide_logo {
-  padding: 0 5px;
+  padding: 10px 0;
 }
 .logo_img {
-  width: 80%;
-  background-color: white;
-  height: 60%;
-  margin-top: 10px;
+  width: 90%;
+  height: 90%;
   cursor: pointer;
+  object-fit: contain;
 }
 .hide_logo_img {
   margin-top: 20px;

@@ -39,10 +39,6 @@ p{
   .gg{
     width:100%;
   }
-  .gg i{
-    font-size: 20px;
-    cursor: pointer;
-  }
   .ggs .item{
     width:100%;
     display: flex;
@@ -52,6 +48,10 @@ p{
   }
   .ggs .item .l{
     width:5%;
+  }
+  .ggs .item .l i{
+    font-size: 20px;
+    cursor: pointer;
   }
   .ggs .item .r{
     width:93%;

@@ -18,13 +18,13 @@
                     border
                     style="width: 100%">
                 <el-table-column
-                        prop="name"
+                        prop="nickname"
                         label="昵称"
                         align="center"
                         width="120">
                 </el-table-column>
                 <el-table-column
-                        prop="realName"
+                        prop="realname"
                         label="真实姓名"
                         align="center"
                         width="120">
@@ -190,14 +190,17 @@
 </template>
 
 <script>
+    import {getUser} from "../util/lang";
+
     export default {
         name: "user",
         data(){
             return{
                 fileList: [],
+                fileList2:[],
                 readonly:true,
                 Editreadonly:false,
-                circleUrl:'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+                circleUrl:'httpss://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
                 dialogTableVisible:false,
                 EditdialogTableVisible:false,
                 tableData: [
@@ -270,7 +273,20 @@
                 form:{}
             }
         },
+        mounted(){
+            setTimeout(()=>{
+                this.getList()
+            })
+        },
         methods:{
+            // 获取全部分类数据
+            getList(){
+                const url = `${getUser()}`
+                this.$axios.post(url).then(res => {
+                    this.tableData=res.data.data.data
+                   console.log( this.tableData )
+                })
+            },
             addOne(){
                 this.EditdialogTableVisible=true
                 this.form={}
@@ -282,7 +298,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "https://cloud.carbonconf.cn/common/uploadImg.php";
+                    const url = "httpss://cloud.carbonconf.cn/common/uploadImg.php";
                     this.$axios
                         .post(url, formData, {
                             headers: {
@@ -303,7 +319,7 @@
             } else {
                 const formData = new FormData(); // 声明一个FormData对象
                 formData.append("file", file.raw);
-                const url = "https://cloud.carbonconf.cn/common/uploadImg.php";
+                const url = "httpss://cloud.carbonconf.cn/common/uploadImg.php";
                 this.$axios
                     .post(url, formData, {
                         headers: {
