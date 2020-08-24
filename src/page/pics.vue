@@ -79,7 +79,7 @@
                     <template slot-scope="scope">
                         <el-switch
                                 v-model="scope.row.checkinfo"
-                                active-color="#ff4949"
+                                active-color="#409EFF"
                                 inactive-color="#dcdfe6"
                                 :active-value="activeNum"
                                 :inactive-value="InactiveNum"
@@ -168,7 +168,7 @@
                     <el-form-item label="是否显示" >
                         <el-switch
                                 v-model="form.checkinfo"
-                                active-color="#ff4949"
+                                active-color="#409EFF"
                                 inactive-color="#dcdfe6"
                                 :active-value="activeNum"
                                 :inactive-value="InactiveNum"
@@ -222,7 +222,7 @@
                 <el-form-item label="是否显示" >
                     <el-switch
                             v-model="form.checkinfo"
-                            active-color="#ff4949"
+                            active-color="#409EFF"
                             inactive-color="#dcdfe6"
                             :active-value="activeNum"
                             :inactive-value="InactiveNum">
@@ -482,6 +482,9 @@
                 this.dialogTableVisible=true
             },
             handleEdit(index, row) {
+                this.fileList=[{
+                    url:''
+                }]
                 this.form=row
                 this.EditdialogTableVisible=true
                 this.fileList[0].url='https://cn-flt.com/'+this.form.picurl

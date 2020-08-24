@@ -79,7 +79,7 @@
                     <template slot-scope="scope">
                         <el-switch
                                 v-model="scope.row.checkinfo"
-                                active-color="#ff4949"
+                                active-color="#409EFF"
                                 inactive-color="#dcdfe6"
                                 :active-value="activeNum"
                                 :inactive-value="InactiveNum"
@@ -150,7 +150,7 @@
                         <el-input  v-model="form.name" autocomplete="off" placeholder="请输入标题" ></el-input>
                     </el-form-item>
                     <el-form-item label="类别" >
-                        <el-select v-model="form.type" placeholder="请选择图片类别">
+                        <el-select v-model="form.type">
                             <el-option
                                     v-for="item in options"
                                     :key="item.value"
@@ -165,7 +165,7 @@
                     <el-form-item label="是否显示" >
                         <el-switch
                                 v-model="form.checkinfo"
-                                active-color="#ff4949"
+                                active-color="#409EFF"
                                 inactive-color="#dcdfe6"
                                 :active-value="activeNum"
                                 :inactive-value="InactiveNum"
@@ -216,7 +216,7 @@
                 <el-form-item label="是否显示" >
                     <el-switch
                             v-model="form.checkinfo"
-                            active-color="#ff4949"
+                            active-color="#409EFF"
                             inactive-color="#dcdfe6"
                             :active-value="activeNum"
                             :inactive-value="InactiveNum">
@@ -458,12 +458,19 @@
             },
             handleShow(index, row) {
                 this.form=row
+                this.fileList[0].url='https://cn-flt.com/'+this.form.picurl
                 this.dialogTableVisible=true
             },
             handleEdit(index, row) {
-                this.form=row
-                this.EditdialogTableVisible=true
-                this.fileList[0].url='https://cn-flt.com/'+this.form.picurl
+                this.fileList=[{
+                    url:''
+                }]
+                setTimeout(()=>{
+                    this.form=row
+                    this.form.type=parseInt(this.form.type)
+                    this.fileList[0].url='https://cn-flt.com/'+this.form.picurl
+                    this.EditdialogTableVisible=true
+                },500)
             },
             handleDelete(index, row) {
                 this.delete(row.id)

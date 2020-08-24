@@ -219,7 +219,6 @@ export default {
 .el-aside {
   background-color: #001529;
   color: white;
-  transition: all 600ms;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
@@ -260,8 +259,8 @@ export default {
   object-fit: contain;
 }
 .hide_logo_img {
-  margin-top: 20px;
-  height: auto;
+  width: 80%;
+  height: 80%;
 }
 .main_head {
   padding: 0;

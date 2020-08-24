@@ -79,7 +79,7 @@
                     <template slot-scope="scope">
                         <el-switch
                                 v-model="scope.row.checkinfo"
-                                active-color="#ff4949"
+                                active-color="#409EFF"
                                 inactive-color="#dcdfe6"
                                 :active-value="activeNum"
                                 :inactive-value="InactiveNum"
@@ -225,8 +225,23 @@
                         </div>
                     </div>
                 </el-form-item>
+
+                <el-form-item label="详情" >
+                    <mavon-editor v-model="form.details" :ishljs = "true" ref=md @imgAdd="$imgAdd" />
+                </el-form-item>
+
                 <el-form-item label="排序" >
                     <el-input-number v-model="form.orderid" controls-position="right"  :min="1" :max="100"    ></el-input-number>
+                </el-form-item>
+                <el-form-item label="是否显示" >
+                    <el-switch
+                            v-model="form.checkinfo"
+                            active-color="#409EFF"
+                            inactive-color="#dcdfe6"
+                            :active-value="activeNum"
+                            :inactive-value="InactiveNum"
+                    >
+                    </el-switch>
                 </el-form-item>
 
             </el-form>
@@ -304,6 +319,10 @@
                         </div>
                     </div>
                 </el-form-item>
+
+                <el-form-item label="详情" >
+                    <mavon-editor v-model="form.details" :ishljs = "true"  />
+                </el-form-item>
                 <el-form-item label="品类" >
                     <el-select v-model="form.class" placeholder="请选择品类" disabled >
                         <el-option
@@ -327,6 +346,17 @@
 
                 <el-form-item label="排序" >
                     <el-input-number v-model="form.orderid" controls-position="right" @change="handleChange" :min="1" :max="100" :disabled="true"></el-input-number>
+                </el-form-item>
+                <el-form-item label="是否显示" >
+                    <el-switch
+                            v-model="form.checkinfo"
+                            active-color="#409EFF"
+                            inactive-color="#dcdfe6"
+                            :active-value="activeNum"
+                            :inactive-value="InactiveNum"
+                            disabled
+                    >
+                    </el-switch>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -423,6 +453,10 @@
                         </div>
                     </div>
                 </el-form-item>
+
+                <el-form-item label="详情" >
+                    <mavon-editor v-model="form.details" :ishljs = "true" ref=md @imgAdd="$imgAdd" />
+                </el-form-item>
                 <el-form-item label="品类" >
                     <el-select v-model="form.class" placeholder="请选择品类"  >
                         <el-option
@@ -449,7 +483,7 @@
                 <el-form-item label="是否显示" >
                     <el-switch
                             v-model="form.checkinfo"
-                            active-color="#ff4949"
+                            active-color="#409EFF"
                             inactive-color="#dcdfe6"
                             :active-value="activeNum"
                             :inactive-value="InactiveNum">
@@ -499,11 +533,11 @@
                 tableData: [],
                 form:{
                     title:'',
-                    details:'00',
+                    details:'',
                     class:'',
                     series:'',
                     orderid:1,
-                    checkinfo:0,
+                    checkinfo:1,
                     picarr:[],
                     attribute:[],
                     product_list:[
@@ -544,6 +578,23 @@
             },100)
         },
         methods:{
+            $imgAdd(pos, $file){
+                // 第一步.将图片上传到服务器.
+                var formdata = new FormData();
+                formdata.append('file', $file);
+                const url = "https://cn-flt.com/api/Upload";
+                this.$axios
+                    .post(url, formdata, {
+                        headers: {
+                            "content-type": "multer/form-data"
+                        }
+                    })
+                    .then(res => {
+                        if (res.data.code === 200) {
+                            this.$refs.md.$img2Url(pos,'https://cn-flt.com/'+res.data.path);
+                        }
+                    });
+            },
             handleRemove(fileList) {
                 this.form.picarr.map((item,index)=>{
                     if(item==(fileList.url.split("https://cn-flt.com")[1].toString())){
@@ -674,11 +725,11 @@
                 this.fileList=[]
                 this.form={
                     title:'',
-                    details:'00',
+                    details:'',
                     class:'',
                     series:'',
                     orderid:1,
-                    checkinfo:0,
+                    checkinfo:1,
                     picarr:[],
                     attribute:[],
                     product_list:[
