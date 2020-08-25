@@ -244,7 +244,7 @@
                 </el-form-item>
 
                 <el-form-item label="详情" >
-                    <mavon-editor v-model="form.details" :ishljs = "true" ref=md @imgAdd="$imgAdd" />
+                    <mavon-editor v-model="form.details" :ishljs = "true" ref=md @imgAdd="$imgAdd" @change="getDetails" @save="saveMavon" />
                 </el-form-item>
 
                 <el-form-item label="排序" >
@@ -493,7 +493,7 @@
                 </el-form-item>
 
                 <el-form-item label="详情" >
-                    <mavon-editor v-model="form.details" :ishljs = "true" ref=md @imgAdd="$imgAdd" />
+                    <mavon-editor v-model="form.details" :ishljs = "true" ref=md  @imgAdd="$imgAdd" @change="getDetails" @save="saveMavon" />
                 </el-form-item>
                 <el-form-item label="品类" >
                     <el-select v-model="form.class" placeholder="请选择品类"  >
@@ -599,7 +599,8 @@
                             picurl:''
                         }
                     ]
-                }
+                },
+                details:''
             }
         },
         filters:{
@@ -619,6 +620,12 @@
             },100)
         },
         methods:{
+            getDetails(value,render){
+                this.details=render
+            },
+            saveMavon(value,render){
+                this.details=render
+            },
             shuaxin(){
                 location.reload()
             },
@@ -801,6 +808,7 @@
                 this.AddialogTableVisible=true
             },
             handleAdd(){
+                this.form.details=this.details
                 let newForm=JSON.parse(JSON.stringify(this.form))
                 newForm.picarr=JSON.stringify(this.form.picarr)
                 newForm.product_list=JSON.stringify(this.form.product_list)
@@ -818,6 +826,7 @@
                 this.AddialogTableVisible=false
             },
             confirmEdit(){
+                this.form.details=this.details
                this.EditdialogTableVisible=false
                 let newForm=JSON.parse(JSON.stringify(this.form))
                 newForm.picarr=JSON.stringify(this.form.picarr)
