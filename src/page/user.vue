@@ -12,6 +12,9 @@
         <div class="form">
             <div class="add">
                 <el-button type="primary" @click="addOne">添加会员</el-button>
+                <div class="refresh" @click="shuaxin">
+                    <i class="el-icon-refresh-right"></i>
+                </div>
             </div>
             <el-table
                     :data="tableData"
@@ -279,6 +282,9 @@
             })
         },
         methods:{
+            shuaxin(){
+                location.reload()
+            },
             // 获取全部分类数据
             getList(){
                 const url = `${getUser()}`
@@ -405,6 +411,17 @@
         margin: 60px auto;
         .add{
             margin: 30px 0;
+            position: relative;
+            .refresh{
+                position: absolute;
+                right:0;
+                top:0;
+                i{
+                    font-size: 30px;
+                    cursor: pointer;
+                    color:#409EFF;
+                }
+            }
         }
     }
 

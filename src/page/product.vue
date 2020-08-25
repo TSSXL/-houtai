@@ -23,6 +23,9 @@
 <!--                    </el-select>-->
 
 <!--                </div>-->
+                <div class="refresh" @click="shuaxin">
+                    <i class="el-icon-refresh-right"></i>
+                </div>
 
             </div>
             <el-table
@@ -111,6 +114,7 @@
                         layout="prev, pager, next"
                         background
                         @current-change="handleCurrentChange"
+                        :current-page="Currentpage"
                         :page-count="totalPage">
                 </el-pagination>
             </div>
@@ -124,7 +128,20 @@
                 <el-form-item label="产品名称" >
                     <el-input  v-model="form.title" autocomplete="off" placeholder="请输入产品名称" ></el-input>
                 </el-form-item>
-                <el-form-item label="产品图片" >
+                <el-form-item label="产品缩略图" >
+                    <el-upload
+                            class="avatar-uploader"
+                            action="#"
+                            :limit="1"
+                            list-type="picture-card"
+                            :file-list="fileList4"
+                            :on-change="handleUploadChange5"
+                            :auto-upload="false"
+                    >
+                        <i class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="产品图组" >
                     <el-upload
                             class="avatar-uploader"
                             action="#"
@@ -193,13 +210,13 @@
                                     <div class="oItem">
                                         <span>规格名称</span>
                                         <div class="s2">
-                                            <el-input  v-model="item.p_name" autocomplete="off" placeholder="请输入规格" ></el-input>
+                                            <el-input   v-model="item.p_name" autocomplete="off" placeholder="请输入规格" ></el-input>
                                         </div>
                                     </div>
                                     <div class="oItem">
                                         <span>价格</span>
                                         <div class="s2">
-                                            <el-input  v-model="item.price" autocomplete="off" placeholder="请输入价格" ></el-input>
+                                            <el-input  type="number" v-model="item.price" autocomplete="off" placeholder="请输入价格" ></el-input>
                                         </div>
                                     </div>
                                     <div class="oItem">
@@ -211,13 +228,13 @@
                                     <div class="oItem">
                                         <span>销量</span>
                                         <div class="s2">
-                                            <el-input  v-model="item.sales_num" autocomplete="off" placeholder="请输入销量" ></el-input>
+                                            <el-input  type="number" v-model="item.sales_num" autocomplete="off" placeholder="请输入销量" ></el-input>
                                         </div>
                                     </div>
                                     <div class="oItem">
                                         <span>库存</span>
                                         <div class="s2">
-                                            <el-input-number v-model="item.stock"  controls-position="right"  :min="1" :max="10000"    ></el-input-number>
+                                            <el-input-number type="number" v-model="item.stock"  controls-position="right"  :min="1" :max="10000"    ></el-input-number>
                                         </div>
                                     </div>
                                 </div>
@@ -231,7 +248,7 @@
                 </el-form-item>
 
                 <el-form-item label="排序" >
-                    <el-input-number v-model="form.orderid" controls-position="right"  :min="1" :max="100"    ></el-input-number>
+                    <el-input-number type="number" v-model="form.orderid" controls-position="right"  :min="1" :max="100"    ></el-input-number>
                 </el-form-item>
                 <el-form-item label="是否显示" >
                     <el-switch
@@ -254,7 +271,12 @@
         <!--       查看图片-->
         <el-dialog title="产品详情" :visible.sync="dialogTableVisible" >
             <el-form :model="form"   label-width="100px">
-                <el-form-item label="产品图" >
+                <el-form-item label="产品缩略图" >
+                    <div class="pic">
+                        <img  :src="`https://cn-flt.com/${form.picurl}`" alt="" :key="index">
+                    </div>
+                </el-form-item>
+                <el-form-item label="产品图组" >
                     <div class="pic">
                         <img v-for="(item,index) in form.picarr" :src="`https://cn-flt.com/${item}`" alt="" :key="index">
                     </div>
@@ -293,7 +315,7 @@
                                     <div class="oItem">
                                         <span>价格</span>
                                         <div class="s2">
-                                            <el-input  v-model="item.price" autocomplete="off" placeholder="请输入价格" :readonly="readonly" ></el-input>
+                                            <el-input type="number"  v-model="item.price" autocomplete="off" placeholder="请输入价格" :readonly="readonly" ></el-input>
                                         </div>
                                     </div>
                                     <div class="oItem">
@@ -305,13 +327,13 @@
                                     <div class="oItem">
                                         <span>销量</span>
                                         <div class="s2">
-                                            <el-input  v-model="item.sales_num" autocomplete="off" placeholder="请输入销量" :readonly="readonly" ></el-input>
+                                            <el-input type="number"  v-model="item.sales_num" autocomplete="off" placeholder="请输入销量" :readonly="readonly" ></el-input>
                                         </div>
                                     </div>
                                     <div class="oItem">
                                         <span>库存</span>
                                         <div class="s2">
-                                            <el-input-number v-model="item.stock"  controls-position="right" @change="handleChange" :min="1" :max="10000"  :disabled="true"  ></el-input-number>
+                                            <el-input-number type="number" v-model="item.stock"  controls-position="right" @change="handleChange" :min="1" :max="10000"  :disabled="true"  ></el-input-number>
                                         </div>
                                     </div>
                                 </div>
@@ -345,7 +367,7 @@
                 </el-form-item>
 
                 <el-form-item label="排序" >
-                    <el-input-number v-model="form.orderid" controls-position="right" @change="handleChange" :min="1" :max="100" :disabled="true"></el-input-number>
+                    <el-input-number type="number" v-model="form.orderid" controls-position="right" @change="handleChange" :min="1" :max="100" :disabled="true"></el-input-number>
                 </el-form-item>
                 <el-form-item label="是否显示" >
                     <el-switch
@@ -368,7 +390,24 @@
         <!--      编辑图片详情-->
         <el-dialog title="编辑产品" :visible.sync="EditdialogTableVisible" >
             <el-form :model="form"   label-width="100px">
-                <el-form-item label="产品图" >
+                <el-form-item label="产品名称" >
+                    <el-input  v-model="form.title" autocomplete="off" placeholder="请输入产品名称" ></el-input>
+                </el-form-item>
+                <el-form-item label="产品缩略图" >
+                    <el-upload
+                            class="avatar-uploader"
+                            action="#"
+                            :limit="1"
+                            list-type="picture-card"
+                            :file-list="fileList4"
+                            :on-change="handleUploadChange5"
+                            :auto-upload="false"
+                            :on-remove="handleRemove2"
+                    >
+                        <i class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="产品图组" >
                     <el-upload
                             class="avatar-uploader"
                             action="#"
@@ -381,9 +420,6 @@
                     >
                         <i class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
-                </el-form-item>
-                <el-form-item label="产品名称" >
-                    <el-input  v-model="form.title" autocomplete="off" placeholder="请输入产品名称" ></el-input>
                 </el-form-item>
                 <el-form-item label="属性" >
                     <el-checkbox-group v-model="form.attribute" @change="handleCheckedCitiesChange2">
@@ -413,9 +449,11 @@
                                                     :file-list="fileList2"
                                                     :on-change="handleUploadChange4"
                                                     :auto-upload="false"
+                                                    :on-remove="handleRemove3"
                                             >
-                                                <img  :src="`https://cn-flt.com/${item.picurl}`" class="avatar">
+                                                <img v-if="item.picurl!==''"  :src="`https://cn-flt.com/${item.picurl}`" class="avatar">
                                             </el-upload>
+<!--                                            <i class="el-icon-close" @click="handleRemove3"></i>-->
                                         </div>
                                     </div>
                                     <div class="oItem">
@@ -427,7 +465,7 @@
                                     <div class="oItem">
                                         <span>价格</span>
                                         <div class="s2">
-                                            <el-input  v-model="item.price" autocomplete="off" placeholder="请输入价格" ></el-input>
+                                            <el-input type="number"  v-model="item.price" autocomplete="off" placeholder="请输入价格" ></el-input>
                                         </div>
                                     </div>
                                     <div class="oItem">
@@ -439,13 +477,13 @@
                                     <div class="oItem">
                                         <span>销量</span>
                                         <div class="s2">
-                                            <el-input  v-model="item.sales_num" autocomplete="off" placeholder="请输入销量" ></el-input>
+                                            <el-input type="number"  v-model="item.sales_num" autocomplete="off" placeholder="请输入销量" ></el-input>
                                         </div>
                                     </div>
                                     <div class="oItem">
                                         <span>库存</span>
                                         <div class="s2">
-                                            <el-input-number v-model="item.stock"  controls-position="right" @change="handleChange" :min="1" :max="10000"    ></el-input-number>
+                                            <el-input-number type="number" v-model="item.stock"  controls-position="right" @change="handleChange" :min="1" :max="10000"    ></el-input-number>
                                         </div>
                                     </div>
                                 </div>
@@ -478,7 +516,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="排序" >
-                    <el-input-number v-model="form.orderid" controls-position="right" @change="handleChangeEdit" :min="1" :max="10000"    ></el-input-number>
+                    <el-input-number type="number" v-model="form.orderid" controls-position="right" @change="handleChangeEdit" :min="1" :max="10000"    ></el-input-number>
                 </el-form-item>
                 <el-form-item label="是否显示" >
                     <el-switch
@@ -515,6 +553,7 @@
                 activeNum:1,
                 index:0,
                 InactiveNum:0,
+                Currentpage:1,
                 cities:[],
                 cities2:[
                     "推荐",
@@ -524,6 +563,7 @@
                 fileList: [],
                 fileList2:[],
                 fileList3:[],
+                fileList4:[],
                 readonly:true,
                 Editreadonly:false,
                 dialogTableVisible:false,
@@ -534,6 +574,7 @@
                 form:{
                     title:'',
                     details:'',
+                    picurl:'',
                     class:'',
                     series:'',
                     orderid:1,
@@ -578,6 +619,9 @@
             },100)
         },
         methods:{
+            shuaxin(){
+                location.reload()
+            },
             $imgAdd(pos, $file){
                 // 第一步.将图片上传到服务器.
                 var formdata = new FormData();
@@ -601,6 +645,14 @@
                         this.form.picarr.splice(index,1)
                     }
                 })
+            },
+            handleRemove2(fileList) {
+                this.form.picurl=''
+                console.log(fileList)
+            },
+            handleRemove3(fileList){
+                this.form.product_list[this.index].picurl=''
+                console.log(fileList)
             },
             // 对应图片上传
             getIndex(n){
@@ -683,6 +735,7 @@
                     this.category=res.data.category
                     this.tableData=res.data.data.data
                     this.totalPage=res.data.data.last_page
+                    this.Currentpage=1
                 })
             },
             removeItem(n){
@@ -723,8 +776,10 @@
             },
             addOne(){
                 this.fileList=[]
+                this.fileList4=[]
                 this.form={
                     title:'',
+                    picurl:'',
                     details:'',
                     class:'',
                     series:'',
@@ -827,6 +882,27 @@
                         });
                 }
             },
+            handleUploadChange5(file) {
+                const isLt2M = file.size / 1024 / 1024 < 2;
+                if (!isLt2M) {
+                    this.$message.error("上传的图片大小不能超过2M！");
+                } else {
+                    const formData = new FormData(); // 声明一个FormData对象
+                    formData.append("file", file.raw);
+                    const url = "https://cn-flt.com/api/Upload";
+                    this.$axios
+                        .post(url, formData, {
+                            headers: {
+                                "content-type": "multer/form-data"
+                            }
+                        })
+                        .then(res => {
+                            if (res.data.code === 200) {
+                                this.form.picurl=res.data.path
+                            }
+                        });
+                }
+            },
             // 删除
             delete(id) {
                 const url = `${deleteProduct(id)}`
@@ -859,6 +935,8 @@
             // 编辑详情
             handleEdit(row) {
                 this.fileList3=[]
+                this.fileList4=[]
+                this.fileList2=[]
                 setTimeout(()=>{
                     this.EditdialogTableVisible=true
                     const url = `${getProductInfo(row.id)}`
@@ -869,6 +947,12 @@
                                 this.form.picarr.map((item)=>{
                                     this.fileList3.push({url:'https://cn-flt.com'+item})
                                 })
+
+                                if(this.form.picurl!==null && this.form.picurl!==""){
+                                    this.fileList4.push({url:'https://cn-flt.com'+this.form.picurl})
+                                }else{
+                                    this.fileList4=[]
+                                }
                             }
                         });
                 },600)
@@ -921,8 +1005,19 @@
                 width:100%;
                 display: flex;
                 flex-direction: row;
+                position: relative;
                 .chose{
                     margin: 0 30px;
+                }
+                .refresh{
+                    position: absolute;
+                    right:0;
+                    top:0;
+                    i{
+                        font-size: 30px;
+                        cursor: pointer;
+                        color:#409EFF;
+                    }
                 }
             }
             .spic{
@@ -937,20 +1032,36 @@
     }
 </style>
 <style scoped>
+    .ggs .item{
+        width:95%;
+        padding: 20px 2.5%;
+        border: 1px solid #e6e6e6;
+        margin-bottom: 30px;
+    }
     .pic img{
         width:148px;
         height:148px;
-        object-fit: contain;
+        object-fit: cover;
         margin-right: 10px;
     }
     .s2 img{
         width:148px;
         height:148px;
-        object-fit: contain;
+        object-fit: cover;
+    }
+    .s22{
+        position: relative;
     }
     .s22 img{
         width:148px;
         height:148px;
+    }
+    .s22 i{
+        position: absolute;
+        right:-40px;
+        top:0;
+        cursor: pointer;
+        font-size: 25px;
     }
     .ggs .item .r .oItem span{
         display: block;

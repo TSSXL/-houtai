@@ -24,6 +24,10 @@
 
                 </div>
 
+                <div class="refresh" @click="shuaxin">
+                    <i class="el-icon-refresh-right"></i>
+                </div>
+
             </div>
             <el-table
                     :data="tableData"
@@ -56,7 +60,7 @@
                         align="center"
                         width="200">
                     <template slot-scope="scope">
-                        <div class="spic">
+                        <div class="spic" v-if="scope.row.picurl!==null">
                             <img :src="`https://cn-flt.com/${scope.row.picurl}`" alt="">
                         </div>
 
@@ -107,6 +111,7 @@
                         layout="prev, pager, next"
                         background
                         @current-change="handleCurrentChange"
+                        :current-page="Currentpage"
                         :page-count="totalPage">
                 </el-pagination>
             </div>
@@ -142,6 +147,7 @@
                                 :file-list="fileList"
                                 :on-change="handleUploadChange3"
                                 :auto-upload="false"
+                                :on-remove="handleRemove"
                         >
                             <i class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
@@ -163,7 +169,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="排序" >
-                        <el-input-number v-model="form.orderid" controls-position="right" @change="handleChangeEdit" :min="1" :max="10000"></el-input-number>
+                        <el-input-number type="number" v-model="form.orderid" controls-position="right" @change="handleChangeEdit" :min="1" :max="10000"></el-input-number>
                     </el-form-item>
                     <el-form-item label="是否显示" >
                         <el-switch
@@ -217,7 +223,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="排序" >
-                    <el-input-number v-model="form.orderid" controls-position="right" @change="handleChangeEdit" :min="1" :max="10000"></el-input-number>
+                    <el-input-number type="number" v-model="form.orderid" controls-position="right" @change="handleChangeEdit" :min="1" :max="10000"></el-input-number>
                 </el-form-item>
                 <el-form-item label="是否显示" >
                     <el-switch
@@ -248,6 +254,7 @@
             return{
                 activeNum:1,
                 InactiveNum:0,
+                Currentpage:1,
                 options: [{
                     value: 1,
                     label: '首页跳转'
@@ -301,6 +308,13 @@
             this.getList()
         },
         methods:{
+            shuaxin(){
+                location.reload()
+            },
+            handleRemove(fileList) {
+              this.form.picurl=''
+                console.log(fileList)
+            },
             changeType(value){
                 this.value=value
                 const url = `${getHome()}`
@@ -352,9 +366,12 @@
                 this.$axios.post(url).then(res => {
                     this.tableData=res.data.data.data
                     this.totalPage=res.data.data.last_page
+                    this.Currentpage=1
+                    this.value=''
                 })
             },
             handleCurrentChange(val) {
+                 this.Currentpage=val
                 if(val<=this.totalPage){
                     this.$nextTick(()=>{
                         const url = `${getHome()}`
@@ -376,6 +393,7 @@
                 }
             },
             addOne(){
+                this.fileList2=[]
                 this.AddialogTableVisible=true
                 this.form={
                     title:'',
@@ -487,7 +505,11 @@
                 }]
                 this.form=row
                 this.EditdialogTableVisible=true
-                this.fileList[0].url='https://cn-flt.com/'+this.form.picurl
+                if(this.form.picurl!==null && this.form.picurl!==""){
+                    this.fileList[0].url='https://cn-flt.com/'+this.form.picurl
+                }else{
+                    this.fileList=[]
+                }
             },
             handleDelete(index, row) {
                 this.delete(row.id)
@@ -536,8 +558,19 @@
                 width:100%;
                 display: flex;
                 flex-direction: row;
+                position: relative;
                 .chose{
                     margin: 0 30px;
+                }
+                .refresh{
+                    position: absolute;
+                    right:0;
+                    top:0;
+                    i{
+                        font-size: 30px;
+                        cursor: pointer;
+                        color:#409EFF;
+                    }
                 }
             }
             .spic{
