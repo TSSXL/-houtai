@@ -50,7 +50,7 @@
                         align="center"
                         width="200">
                     <template slot-scope="scope">
-                        <span>{{ scope.row.status | dataFormat }}</span>
+                        <span :class="aClass(scope.row.status)">{{ scope.row.status | dataFormat }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -133,20 +133,8 @@
                 <el-form-item label="收货人地址" >
                     <div class="address">
                         <p>
-                            <span style="font-weight: bolder">省:</span>
-                            {{form.order_address.province}}
-                        </p>
-                        <p>
-                            <span style="font-weight: bolder">城市:</span>
-                            {{form.order_address.city}}
-                        </p>
-                        <p>
-                            <span style="font-weight: bolder">城市:</span>
-                            {{form.order_address.city}}
-                        </p>
-                        <p>
-                            <span style="font-weight: bolder">区:</span>
-                            {{form.order_address.area}}
+                            <span style="font-weight: bolder">地址:</span>
+                            {{form.order_address.province}}     {{form.order_address.city}}  {{form.order_address.area}}
                         </p>
                         <p>
                             <span style="font-weight: bolder">具体地址:</span>
@@ -270,6 +258,9 @@
             this.getList()
         },
         methods:{
+            aClass(n){
+                return 'color'+n
+            },
             // 查看详情
             handleShow(n,id) {
                 this.dialogTableVisible=true
@@ -452,6 +443,18 @@
         font-weight: bolder;
         display: inline-block;
         margin-right: 10px;
+    }
+    .color1{
+      color:#ff0000;
+    }
+    .color2{
+        color: #caa100;
+    }
+    .color3{
+        color: #00a20b;
+    }
+    .color4{
+        color: #0074ce;
     }
 </style>
 
