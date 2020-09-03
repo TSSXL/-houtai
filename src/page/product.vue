@@ -946,6 +946,7 @@
                 this.fileList3=[]
                 this.fileList4=[]
                 this.fileList2=[]
+                this.form.details=""
                 setTimeout(()=>{
                     this.EditdialogTableVisible=true
                     const url = `${getProductInfo(row.id)}`
@@ -956,6 +957,10 @@
                                 this.form.picarr.map((item)=>{
                                     this.fileList3.push({url:'https://cn-flt.com'+item})
                                 })
+
+                                if(this.form.details==null){
+                                    this.form.details=""
+                                }
 
                                 if(this.form.picurl!==null && this.form.picurl!==""){
                                     this.fileList4.push({url:'https://cn-flt.com'+this.form.picurl})

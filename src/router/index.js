@@ -10,6 +10,7 @@ import User from '../page/user.vue'
 import Pics from '../page/pics.vue'
 import Protype from '../page/protype.vue'
 import Product from '../page/product.vue'
+import Order from '../page/order.vue'
 
 
 Vue.use(VueRouter)
@@ -42,6 +43,10 @@ const routes = [{
             },{
                 path: '/product',
                 component: Product
+            },
+            {
+                path: '/order',
+                component: Order
             }
         ]
     },

@@ -176,3 +176,23 @@ export const getUser = () => {
     return `${BASEURI}/Admin/getUser`
 }
 
+
+//获取订单
+export const getOrder = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/getOrder`
+}
+
+
+//查看订单
+export const getOrderInfo = (id) => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/editOrder?id=${id}`
+}
+
+
+//查看订单
+export const editDing = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/updateOrder`
+}
