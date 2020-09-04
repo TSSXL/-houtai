@@ -10,24 +10,55 @@
             </div>
         </div>
         <div class="form">
-<!--            <div class="add">-->
-<!--                <div class="chose">-->
-<!--                    <el-select v-model="value" placeholder="请选择订单状态" @change="changeType">-->
-<!--                        <el-option-->
-<!--                                v-for="item in options"-->
-<!--                                :key="item.value"-->
-<!--                                :label="item.label"-->
-<!--                                :value="item.value">-->
-<!--                        </el-option>-->
-<!--                    </el-select>-->
+            <div class="add">
+                <div class="chose">
+                    <div class="item">
+                         <span>状态:</span>
+                        <el-select v-model="value" placeholder="请选择订单状态" clearable  @change="changeType">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                    <div class="item">
+                        <span>编号:</span>
+                        <el-input
+                                v-model="number"
+                                placeholder="请输入订单编号"
+                                clearable>
+                        </el-input>
+<!--                        <el-button @click="confirmSearch">确定</el-button>-->
+                    </div>
 
-<!--                </div>-->
+                    <div class="item">
+                        <span>价格:</span>
+                        <div class="price">
+                            <el-input
+                                    v-model="total_s"
+                                    placeholder="最低价格"
+                                    clearable>
+                            </el-input>
+                            <span>-</span>
+                            <el-input
+                                    v-model="total_b"
+                                    placeholder="最高价格"
+                                    clearable>
+                            </el-input>
+                        </div>
+                        <el-button @click="confirmSearch2">确定</el-button>
 
-<!--                <div class="refresh" @click="shuaxin">-->
-<!--                    <i class="el-icon-refresh-right"></i>-->
-<!--                </div>-->
+                    </div>
 
-<!--            </div>-->
+                </div>
+
+                <div class="refresh" @click="shuaxin">
+                    <i class="el-icon-refresh-right"></i>
+                </div>
+
+            </div>
             <el-table
                     :data="tableData"
                     border
@@ -130,6 +161,9 @@
                         </div>
                     </div>
                 </el-form-item>
+                <el-form-item label="下单备注" >
+                    <el-input  v-model="form.message" autocomplete="off" :readonly="readonly" ></el-input>
+                </el-form-item>
                 <el-form-item label="收货人地址" >
                     <div class="address">
                         <p>
@@ -157,11 +191,8 @@
                 <el-form-item label="总金额" >
                     <el-input  v-model="form.total" autocomplete="off" :readonly="readonly" ></el-input>
                 </el-form-item>
-                <el-form-item label="下单备注" >
-                    <el-input  v-model="form.message" autocomplete="off" :readonly="readonly" ></el-input>
-                </el-form-item>
                 <el-form-item label="订单备注" >
-                    <el-input  v-model="form.remarks" autocomplete="off" :readonly="readonly" ></el-input>
+                    <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 8}"  v-model="form.remarks" autocomplete="off" :readonly="readonly" ></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -188,7 +219,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="订单备注" >
-                    <el-input  v-model="form.remarks" autocomplete="off" ></el-input>
+                    <el-input    type="textarea" :autosize="{ minRows: 4, maxRows: 8}" v-model="form.remarks" autocomplete="off" ></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -210,6 +241,9 @@
         name: "user",
         data(){
             return{
+                number:'',
+                total_s:'',
+                total_b:'',
                 activeNum:1,
                 InactiveNum:0,
                 Currentpage:1,
@@ -271,6 +305,22 @@
                             console.log(res.data.data)
                     });
             },
+            confirmSearch2(){
+                const url = `${getOrder()}`
+                this.$axios.post(url,qs.stringify(
+                    {
+                        status:this.value,
+                        number:this.number,
+                       total_s: this.total_s,
+                        total_b: this.total_b
+                    }
+                )).then(res => {
+                    this.tableData=res.data.data.data
+                    this.totalPage=res.data.data.last_page
+                    this.Currentpage=1
+                    // this.value=''
+                })
+            },
             handleEdit(n,id){
                 this.EditdialogTableVisible=true
                 const url = `${getOrderInfo(id)}`
@@ -285,14 +335,16 @@
             },
             changeType(value){
                 this.value=value
-                console.log(value)
                 // const url = `${getOrder()}`
-                // this.$axios.post(url,qs.stringify({
-                //     page:1,
-                //     type:value
-                // })).then(res => {
+                // this.$axios.post(url,qs.stringify(
+                //     {
+                //         status:value
+                //     }
+                // )).then(res => {
                 //     this.tableData=res.data.data.data
                 //     this.totalPage=res.data.data.last_page
+                //     this.Currentpage=1
+                //     // this.value=''
                 // })
             },
             // 编辑状态
@@ -398,9 +450,54 @@
             .add{
                 margin: 30px 0;
                 width:100%;
-                display: flex;
-                flex-direction: row;
                 position: relative;
+                .chose{
+                    width:90%;
+                    display: flex;
+                    flex-direction: row;
+                    position: relative;
+                    justify-content: space-between;
+                    .item{
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        width:30%;
+                        .el-button{
+                            margin-left: 10px !important;
+                        }
+                        span{
+                            font-size: 14px;
+                            line-height: 30px;
+                            text-align: center;
+                        }
+                        .el-input, .el-select{
+                            width:60% !important;
+                            margin-left: 20px !important;
+                        }
+                        .price{
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            width:70%;
+                            span{
+                                text-align: center;
+                                display: inline-block;
+                                width:10%;
+                                margin-left: 10px;
+                            }
+                            .el-input{
+                                width:40% !important;
+                                margin-left: 10px !important;
+                            }
+                        }
+                    }
+                    .item:nth-child(1){
+                        width:25%;
+                    }
+                    .item:nth-child(2),.item:nth-child(3){
+                        width:35%;
+                    }
+                }
                 .refresh{
                     position: absolute;
                     right:0;
