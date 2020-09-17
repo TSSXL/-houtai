@@ -49,7 +49,7 @@ export default {
             type: 'success'
           });
           this.$router.push({
-            path: "/pics"
+            path: "/user"
           });
         }
       })

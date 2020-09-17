@@ -59,140 +59,200 @@ export const login = () => {
     return `${BASEURI}/Admin/Login`
 }
 
-//获取首页图片的内容
+//添加陵园的内容
+export const addCemetery = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/addCemetery`
+}
+
+
+//获取陵园的内容
 export const getHome = () => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/getClass`
+    return `${BASEURI}/Admin/getCemetery`
 }
 
-//添加首页图片的内容
-export const addPic = () => {
+
+//查看陵园的内容
+export const editCemetery = (id) => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/addClass`
+    return `${BASEURI}/Admin/editCemetery?id=${id}`
 }
 
-//修改图片的内容
-export const editPic = () => {
+
+//删除陵园的内容
+export const deleteCemetery = (id) => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/updateClass`
+    return `${BASEURI}/Admin/deleteCemetery?id=${id}`
 }
 
 
-//删除图片的内容
-export const deletePic = (id) => {
+//改变陵园状态
+export const changeCemetery = () => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/deleteClass?id=${id}`
+    return `${BASEURI}/Admin/changeCemetery`
 }
 
-//修改排序
-export const editOrder = () => {
+
+
+//修改陵园的内容
+export const updateCemetery = () => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/changeClass`
+    return `${BASEURI}/Admin/updateCemetery`
 }
 
 
 
-//获取分类
-export const getCategory = () => {
+
+
+//添加烈士墓的内容
+export const addTomb = () => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/getCategory`
+    return `${BASEURI}/Admin/addTomb`
 }
 
-//添加分类
-export const addCategory = () => {
+
+//获取烈士墓的内容
+export const getTomb = () => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/addCategory`
+    return `${BASEURI}/Admin/getTomb`
 }
 
-//修改分类
-export const editCategory= () => {
+
+//查看烈士墓的内容
+export const editTomb = (id) => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/updateCategory`
+    return `${BASEURI}/Admin/editTomb?id=${id}`
 }
 
 
-//删除分类
-export const deleteCategory = (id) => {
+//删除烈士墓的内容
+export const deleteTomb = (id) => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/deleteCategory?id=${id}`
+    return `${BASEURI}/Admin/deleteTomb?id=${id}`
 }
 
-//修改分类排序
-export const editCategoryOrder = () => {
+
+//改变烈士墓状态
+export const changeTomb = () => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/changeCategory`
+    return `${BASEURI}/Admin/changeTomb`
 }
 
 
-//获取产品
-export const getProduct = () => {
+
+//修改烈士墓的内容
+export const updateTomb = () => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/getProduct`
+    return `${BASEURI}/Admin/updateTomb`
 }
 
 
-//添加产品
-export const addProduct = () => {
+
+
+
+//添加烈士的内容
+export const addMartyr = () => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/addProduct`
+    return `${BASEURI}/Admin/addMartyr`
 }
 
-//查看产品
-export const getProductInfo = (id) => {
+
+//获取烈士的内容
+export const getMartyr = () => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/editProduct?id=${id}`
+    return `${BASEURI}/Admin/getMartyr`
 }
 
-//修改分类
-export const editProduct= () => {
+
+//查看烈士的内容
+export const editMartyr = (id) => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/updateProduct`
+    return `${BASEURI}/Admin/editMartyr?id=${id}`
 }
 
-//删除产品
-export const deleteProduct= (id) => {
+
+//删除烈士的内容
+export const deleteMartyr = (id) => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/deleteProduct?id=${id}`
+    return `${BASEURI}/Admin/deleteMartyr?id=${id}`
 }
 
 
-//删除规格
-export const deleteOne= (id) => {
+//改变烈士状态
+export const changeMartyr = () => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/deleteProduct_list?id=${id}`
+    return `${BASEURI}/Admin/changeMartyr`
 }
 
-//修改产品排序
-export const editProductOrder = () => {
+
+
+//修改烈士的内容
+export const updateMartyr = () => {
     // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/changeProduct`
+    return `${BASEURI}/Admin/updateMartyr`
+}
+
+
+//获取所有陵园和烈士
+export const Cemetery_Tomb = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/Cemetery_Tomb`
 }
 
 
 
-//获取用户
+
+
+//添加公告的内容
+export const addNotice = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/addNotice`
+}
+
+
+//获取烈士的内容
+export const getNotice = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/getNotice`
+}
+
+
+//查看烈士的内容
+export const editNotice = (id) => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/editNotice?id=${id}`
+}
+
+
+//删除烈士的内容
+export const deleteNotice = (id) => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/deleteNotice?id=${id}`
+}
+
+
+//改变烈士状态
+export const changeNotice = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/changeNotice`
+}
+
+
+
+//修改烈士的内容
+export const updateNotice = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/updateNotice`
+}
+
+//获取会员的内容
 export const getUser = () => {
     // const language = getLanguage(lang)
     return `${BASEURI}/Admin/getUser`
 }
 
 
-//获取订单
-export const getOrder = () => {
-    // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/getOrder`
-}
 
 
-//查看订单
-export const getOrderInfo = (id) => {
-    // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/editOrder?id=${id}`
-}
 
-
-//查看订单
-export const editDing = () => {
-    // const language = getLanguage(lang)
-    return `${BASEURI}/Admin/updateOrder`
-}

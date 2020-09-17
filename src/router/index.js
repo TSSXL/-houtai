@@ -5,12 +5,14 @@ import VueRouter from 'vue-router'
 import Login from '@/page/login'
 import Index from '../page/index.vue'
 import Home from '../page/home.vue'
-import Exhibits from '../page/exhibits.vue'
 import User from '../page/user.vue'
-import Pics from '../page/pics.vue'
 import Protype from '../page/protype.vue'
 import Product from '../page/product.vue'
 import Order from '../page/order.vue'
+import Lsdots from '../page/lsDots.vue'
+import Message from '../page/message.vue'
+import People from '../page/people.vue'
+import Books from '../page/books.vue'
 
 
 Vue.use(VueRouter)
@@ -25,17 +27,10 @@ const routes = [{
         children: [{
             path: '/home',
             component: Home
-        }, {
-            path: '/exhibits',
-            component: Exhibits
         },
             {
                 path: '/user',
                 component: User
-            },
-            {
-                path: '/pics',
-                component: Pics
             },
             {
                 path: '/protype',
@@ -47,6 +42,22 @@ const routes = [{
             {
                 path: '/order',
                 component: Order
+            },
+            {
+                path: '/lsdots',
+                component: Lsdots
+            },
+            {
+                path: '/message',
+                component: Message
+            },
+            {
+                path: '/people',
+                component: People
+            },
+            {
+                path: '/books',
+                component: Books
             }
         ]
     },

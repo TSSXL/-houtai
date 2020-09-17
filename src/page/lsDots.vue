@@ -4,14 +4,14 @@
             <div class="left">
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>烈士管理</el-breadcrumb-item>
+                    <el-breadcrumb-item>烈士墓</el-breadcrumb-item>
                 </el-breadcrumb>
-                <span class="them">烈士管理</span>
+                <span class="them">烈士墓</span>
             </div>
         </div>
         <div class="form">
             <div class="add">
-                <el-button type="primary" @click="addOne">添加烈士</el-button>
+                <el-button type="primary" @click="addOne">添加烈士墓</el-button>
                 <!--                <div class="chose">-->
                 <!--                    <el-select v-model="value" placeholder="请选择产品分类">-->
                 <!--                        <el-option-->
@@ -39,32 +39,20 @@
                         width="120">
                 </el-table-column>
                 <el-table-column
-                        prop="name"
-                        label="烈士名称"
+                        prop="title"
+                        label="烈士墓名称"
                         align="center"
                         width="200">
                 </el-table-column>
                 <el-table-column
-                        prop="picurl"
-                        label="烈士头像"
-                        align="center"
-                        width="200">
-                    <template slot-scope="scope">
-                        <div class="spic" v-if="scope.row.picurl!==null">
-                            <img :src="`https://syyl.shangyu.gov.cn/${scope.row.picurl}`" alt="">
-                        </div>
-
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        prop="native_place"
-                        label="籍贯"
+                        prop="map"
+                        label="经纬度"
                         align="center"
                         width="200">
                 </el-table-column>
                 <el-table-column
-                        prop="sacrifice_place"
-                        label="牺牲地点"
+                        prop="town"
+                        label="城镇"
                         align="center"
                         width="200">
                 </el-table-column>
@@ -117,79 +105,27 @@
 
 
         <!--      添加-->
-        <el-dialog title="添加烈士" :visible.sync="AddialogTableVisible"  >
+        <el-dialog title="添加烈士墓" :visible.sync="AddialogTableVisible" >
             <el-form :model="form"   label-width="100px">
-                <el-form-item label="烈士姓名" >
-                    <el-input  v-model="form.name" autocomplete="off" placeholder="请输入烈士姓名" ></el-input>
-                </el-form-item>
-                <el-form-item label="烈士头像" >
-                    <el-upload
-                            class="avatar-uploader"
-                            action="#"
-                            :limit="1"
-                            list-type="picture-card"
-                            :file-list="fileList4"
-                            :on-change="handleUploadChange5"
-                            :auto-upload="false"
-                    >
-                        <i class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
+                <el-form-item label="烈士墓名称" >
+                    <el-input  v-model="form.title" autocomplete="off" placeholder="请输入烈士墓名称" ></el-input>
                 </el-form-item>
 
-
-                <el-form-item label="烈士生平" >
-                    <el-input  v-model="form.content"   type="textarea"
-                               :rows="5" autocomplete="off" placeholder="请输入陵园简介" ></el-input>
-                </el-form-item>
-
-
-
-                <el-form-item label="烈士位置" >
+                <el-form-item label="经纬度" >
                     <el-input  v-model="form.map"   autocomplete="off" placeholder="请输入经纬度" ></el-input>
                 </el-form-item>
 
-                <el-form-item label="籍贯" >
-                    <el-input  v-model="form.native_place"   autocomplete="off" placeholder="请输入籍贯" ></el-input>
+                <el-form-item label="城镇" >
+                    <el-select v-model="form.town" placeholder="请选择城镇">
+                        <el-option
+                                v-for="item in options"
+                                :key="item"
+                                :label="item"
+                                :value="item">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
 
-                <el-form-item label="牺牲地点" >
-                    <el-input  v-model="form.sacrifice_place"   autocomplete="off" placeholder="请输入牺牲地点" ></el-input>
-                </el-form-item>
-
-
-                <el-form-item label="选择陵园" >
-                    <el-checkbox-group v-model="form.cemetery_id"   >
-                        <el-checkbox v-for="(item,index) in lyList" :label="item.id" :key="index"  >{{item.title}}</el-checkbox>
-                    </el-checkbox-group>
-                </el-form-item>
-
-                <el-form-item label="选择烈士墓" >
-                    <el-checkbox-group v-model="form.tomb_id" >
-                        <el-checkbox v-for="(item,index) in lsList" :label="item.id" :key="index"  >{{item.title}}</el-checkbox>
-                    </el-checkbox-group>
-                </el-form-item>
-
-
-
-                <el-form-item label="出生时间" >
-                    <el-date-picker
-                            v-model="form.birth_time"
-                            type="date"
-                            format="yyyy 年 MM 月 dd 日"
-                            value-format="yyyy-MM-dd"
-                            placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item>
-
-                <el-form-item label="牺牲时间" >
-                    <el-date-picker
-                            v-model="form.sacrifice_time"
-                            type="date"
-                            format="yyyy 年 MM 月 dd 日"
-                            value-format="yyyy-MM-dd"
-                            placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item>
 
                 <el-form-item label="是否显示" >
                     <el-switch
@@ -210,70 +146,29 @@
         </el-dialog>
 
         <!--       查看图片-->
-        <el-dialog title="烈士详情" :visible.sync="dialogTableVisible" >
+        <el-dialog title="烈士墓详情" :visible.sync="dialogTableVisible" >
             <el-form :model="form"   label-width="100px">
-                <el-form-item label="烈士姓名" >
-                    <el-input  v-model="form.name" autocomplete="off" placeholder="烈士姓名" :readonly="readonly"></el-input>
-                </el-form-item>
-
-                <el-form-item label="烈士头像" >
-                    <div class="pic">
-                        <img  :src="`https://syyl.shangyu.gov.cn/${form.picurl}`" alt="" :key="index">
-                    </div>
-                </el-form-item>
-
-                <el-form-item label="烈士生平" >
-                    <el-input  v-model="form.content"   type="textarea"
-                               :rows="5" autocomplete="off" placeholder="陵园简介" :readonly="readonly" ></el-input>
+                <el-form-item label="烈士墓名称" >
+                    <el-input  v-model="form.title" autocomplete="off" placeholder="陵园名称" :readonly="readonly"></el-input>
                 </el-form-item>
 
 
-
-<!--                <el-form-item label="烈士位置" >-->
-<!--                    <el-input  v-model="form.map"   autocomplete="off" placeholder="经纬度"  :readonly="readonly"></el-input>-->
-<!--                </el-form-item>-->
-
-                <el-form-item label="选择陵园" >
-                    <el-checkbox-group v-model="form.cemetery_id"  >
-                        <el-checkbox v-for="(item,index) in lyList" :label="item.id" :key="index"  disabled>{{item.title}}</el-checkbox>
-                    </el-checkbox-group>
+                <el-form-item label="经纬度" >
+                    <el-input  v-model="form.map"   autocomplete="off" placeholder="经纬度"  :readonly="readonly"></el-input>
                 </el-form-item>
 
-                <el-form-item label="选择烈士墓" >
-                    <el-checkbox-group v-model="form.tomb_id" >
-                        <el-checkbox v-for="(item,index) in lsList" :label="item.id" :key="index"  disabled>{{item.title}}</el-checkbox>
-                    </el-checkbox-group>
-                </el-form-item>
-
-
-                <el-form-item label="出生时间" >
-                    <el-date-picker
-                            v-model="form.birth_time"
-                            type="date"
-                            disabled
-                            placeholder="选择日期">
-                    </el-date-picker>
+                <el-form-item label="城镇" >
+                    <el-select v-model="form.town" placeholder="城镇" disabled>
+                        <el-option
+                                v-for="item in options"
+                                :key="item"
+                                :label="item"
+                                :value="item">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
 
 
-                <el-form-item label="牺牲时间" >
-                    <el-date-picker
-                            v-model="form.sacrifice_time"
-                            type="date"
-                            disabled
-                            format="yyyy 年 MM 月 dd 日"
-                            value-format="yyyy-MM-dd"
-                            placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item>
-
-                <el-form-item label="籍贯" >
-                    <el-input  v-model="form.native_place"   autocomplete="off" placeholder="请输入籍贯"  :readonly="readonly"></el-input>
-                </el-form-item>
-
-                <el-form-item label="牺牲地点" >
-                    <el-input  v-model="form.sacrifice_place"   autocomplete="off" placeholder="请输入牺牲地点" :readonly="readonly" ></el-input>
-                </el-form-item>
 
 
                 <el-form-item label="是否显示" >
@@ -295,76 +190,25 @@
         </el-dialog>
 
         <!--      编辑图片详情-->
-        <el-dialog title="编辑烈士信息" :visible.sync="EditdialogTableVisible" >
+        <el-dialog title="编辑烈士墓" :visible.sync="EditdialogTableVisible" >
             <el-form :model="form"   label-width="100px">
-                <el-form-item label="烈士姓名" >
-                    <el-input  v-model="form.name" autocomplete="off" placeholder="烈士姓名" ></el-input>
-                </el-form-item>
-                <el-form-item label="烈士头像" >
-                    <el-upload
-                            class="avatar-uploader"
-                            action="#"
-                            :limit="1"
-                            list-type="picture-card"
-                            :file-list="fileList4"
-                            :on-change="handleUploadChange5"
-                            :auto-upload="false"
-                            :on-remove="handleRemove2"
-                    >
-                        <i class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
+                <el-form-item label="烈士墓名称" >
+                    <el-input  v-model="form.title" autocomplete="off" placeholder="请输入烈士墓名称" ></el-input>
                 </el-form-item>
 
-                <el-form-item label="烈士生平" >
-                    <el-input  v-model="form.content"   type="textarea"
-                               :rows="5" autocomplete="off" placeholder="请输入烈士生平" ></el-input>
+                <el-form-item label="经纬度" >
+                    <el-input  v-model="form.map"   autocomplete="off" placeholder="请输入经纬度" ></el-input>
                 </el-form-item>
 
-
-
-
-<!--                <el-form-item label="烈士位置" >-->
-<!--                    <el-input  v-model="form.map"   autocomplete="off" placeholder="请输入经纬度" ></el-input>-->
-<!--                </el-form-item>-->
-
-                <el-form-item label="籍贯" >
-                    <el-input  v-model="form.native_place"   autocomplete="off" placeholder="请输入籍贯" ></el-input>
-                </el-form-item>
-
-                <el-form-item label="牺牲地点" >
-                    <el-input  v-model="form.sacrifice_place"   autocomplete="off" placeholder="请输入牺牲地点" ></el-input>
-                </el-form-item>
-
-                <el-form-item label="选择陵园" >
-                    <el-checkbox-group v-model="form.cemetery_id"  >
-                        <el-checkbox v-for="(item,index) in lyList" :label="item.id" :key="index" >{{item.title}}</el-checkbox>
-                    </el-checkbox-group>
-                </el-form-item>
-
-                <el-form-item label="选择烈士墓" >
-                    <el-checkbox-group v-model="form.tomb_id" >
-                        <el-checkbox v-for="(item,index) in lsList" :label="item.id" :key="index" >{{item.title}}</el-checkbox>
-                    </el-checkbox-group>
-                </el-form-item>
-
-                <el-form-item label="出生时间" >
-                    <el-date-picker
-                            v-model="form.birth_time"
-                            type="date"
-                            format="yyyy 年 MM 月 dd 日"
-                            value-format="yyyy-MM-dd"
-                            placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item>
-
-                <el-form-item label="牺牲时间" >
-                    <el-date-picker
-                            v-model="form.sacrifice_time"
-                            type="date"
-                            format="yyyy 年 MM 月 dd 日"
-                            value-format="yyyy-MM-dd"
-                            placeholder="选择日期">
-                    </el-date-picker>
+                <el-form-item label="城镇" >
+                    <el-select v-model="form.town" placeholder="城镇">
+                        <el-option
+                                v-for="item in options"
+                                :key="item"
+                                :label="item"
+                                :value="item">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
 
 
@@ -391,20 +235,30 @@
 </template>
 
 <script>
-    import  {Cemetery_Tomb,getMartyr,editMartyr,changeMartyr,deleteMartyr,addMartyr,updateMartyr} from "../util/lang";
+    import  {getTomb,editTomb,changeTomb,deleteTomb,addTomb,updateTomb} from "../util/lang";
     import  qs from 'qs'
     export default {
         name: "user",
         data(){
             return{
-                lyList:[],
-                lsList:[],
+                options:[
+                    '曹娥街道',
+                    '陈溪乡',
+                    '丰惠镇',
+                    '梁湖镇',
+                    '上浦镇',
+                    '小越镇',
+                    '驿亭镇',
+                    '永和镇',
+                    '章镇镇'
+                ],
+                isUpload:true,
                 activeNum:1,
                 index:0,
                 InactiveNum:0,
                 Currentpage:1,
                 value: '',
-                fileList4:[],
+                value1:'',
                 readonly:true,
                 Editreadonly:false,
                 dialogTableVisible:false,
@@ -413,19 +267,11 @@
                 totalPage:0,
                 tableData: [],
                 form:{
-                    name:'',
-                    picurl:'',
-                    birth_time:'',
-                    sacrifice_time:'',
-                    native_place:'',
-                    sacrifice_place:'',
-                    content:'',
+                    title:'',
                     checkinfo:1,
-                    cemetery_id:'',
-                    tomb_id:'',
-                    checkValue1:[],
-                    checkValue2:[],
-                },
+                    town:'',
+                    map:''
+                }
             }
         },
         // filters:{
@@ -441,7 +287,6 @@
         // },
         mounted(){
             setTimeout(()=>{
-                this.getType()
                 this.getList()
             },100)
         },
@@ -449,13 +294,9 @@
             shuaxin(){
                 location.reload()
             },
-            handleRemove2(fileList) {
-                this.form.picurl=''
-                console.log(fileList)
-            },
             // 是否显示
             changeStatus(value,id){
-                const url = `${changeMartyr()}`
+                const url = `${changeTomb()}`
                 this.$axios.post(url,qs.stringify({
                     id:id,
                     checkinfo:value
@@ -472,7 +313,7 @@
             handleCurrentChange(val) {
                 if(val<=this.totalPage){
                     this.$nextTick(()=>{
-                        const url = `${getMartyr()}`
+                        const url = `${getTomb()}`
                         this.$axios.post(url,qs.stringify(
                             {
                                 page:val++
@@ -491,41 +332,25 @@
             },
             // 获取全部分类数据
             getList(){
-                const url = `${getMartyr()}`
+                const url = `${getTomb()}`
                 this.$axios.post(url).then(res => {
                     this.tableData=res.data.data.data
                     this.totalPage=res.data.data.last_page
                     this.Currentpage=1
                 })
             },
-            getType(){
-                const url = `${Cemetery_Tomb()}`
-                this.$axios.post(url).then(res => {
-                    this.lyList=res.data.cemetery
-                    this.lsList=res.data.tomb
-                })
-            },
             addOne(){
-                this.fileList4=[]
                 this.form={
-                    name:'',
-                    picurl:'',
-                    birth_time:'',
-                    sacrifice_time:'',
-                    native_place:'',
-                    sacrifice_place:'',
-                    content:'',
+                    title:'',
                     checkinfo:1,
-                    tomb_id:[],
-                    cemetery_id:[],
+                    map:'',
+                    town:''
                 }
                 this.AddialogTableVisible=true
             },
             handleAdd(){
                 let newForm=JSON.parse(JSON.stringify(this.form))
-                 newForm.cemetery_id=JSON.stringify(newForm.cemetery_id)
-                newForm.tomb_id=JSON.stringify(newForm.tomb_id)
-                const url = `${addMartyr()}`
+                const url = `${addTomb()}`
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
                         this.$message({
@@ -540,9 +365,7 @@
             confirmEdit(){
                 this.EditdialogTableVisible=false
                 let newForm=JSON.parse(JSON.stringify(this.form))
-                newForm.cemetery_id=JSON.stringify(newForm.cemetery_id)
-                newForm.tomb_id=JSON.stringify(newForm.tomb_id)
-                const url = `${updateMartyr()}`
+                const url = `${updateTomb()}`
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
                         this.$message({
@@ -553,30 +376,9 @@
                     }
                 })
             },
-            handleUploadChange5(file) {
-                const isLt2M = file.size / 1024 / 1024 < 2;
-                if (!isLt2M) {
-                    this.$message.error("上传的图片大小不能超过2M！");
-                } else {
-                    const formData = new FormData(); // 声明一个FormData对象
-                    formData.append("file", file.raw);
-                    const url = "https://syyl.shangyu.gov.cn/api/Upload";
-                    this.$axios
-                        .post(url, formData, {
-                            headers: {
-                                "content-type": "multer/form-data"
-                            }
-                        })
-                        .then(res => {
-                            if (res.data.code === 200) {
-                                this.form.picurl=res.data.path
-                            }
-                        });
-                }
-            },
             // 删除
             delete(id) {
-                const url = `${deleteMartyr(id)}`
+                const url = `${deleteTomb(id)}`
                 this.$axios.post(url)
                     .then(res => {
                         if (res.data.code===200) {
@@ -590,8 +392,9 @@
             },
             // 查看详情
             handleShow(row) {
+                this.fileList=[]
                 this.dialogTableVisible=true
-                const url = `${editMartyr(row.id)}`
+                const url = `${editTomb(row.id)}`
                 this.$axios.post(url)
                     .then(res => {
                         if (res.data.code===200) {
@@ -601,24 +404,13 @@
             },
             // 编辑详情
             handleEdit(row) {
-                this.fileList4=[]
                 setTimeout(()=>{
                     this.EditdialogTableVisible=true
-                    const url = `${editMartyr(row.id)}`
+                    const url = `${editTomb(row.id)}`
                     this.$axios.post(url)
                         .then(res => {
-                            if(res.data.data.tomb_id==null){
-                                res.data.data.tomb_id=[]
-                            } else if(res.data.data.cemetery_id==null){
-                                res.data.data.cemetery_id=[]
-                            }
                             if (res.data.code===200) {
                                 this.form=res.data.data
-                                if(this.form.picurl!==null && this.form.picurl!==""){
-                                    this.fileList4.push({url:'http://syyl.shangyu.gov.cn'+this.form.picurl})
-                                }else{
-                                    this.fileList4=[]
-                                }
                             }
                         });
                 },600)

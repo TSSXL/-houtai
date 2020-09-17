@@ -4,9 +4,9 @@
             <div class="left">
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>陵园浏览记录</el-breadcrumb-item>
+                    <el-breadcrumb-item>烈士浏览记录</el-breadcrumb-item>
                 </el-breadcrumb>
-                <span class="them">陵园浏览记录</span>
+                <span class="them">烈士浏览记录</span>
             </div>
         </div>
         <div class="form">
@@ -61,13 +61,13 @@
                 </el-table-column>
                 <el-table-column
                         prop="number"
-                        label="陵园名称"
+                        label="烈士名称"
                         align="center"
                         width="200">
                 </el-table-column>
                 <el-table-column
                         prop="picurl"
-                        label="陵园图"
+                        label="烈士图"
                         align="center"
                        >
                     <template slot-scope="scope">

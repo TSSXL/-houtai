@@ -4,9 +4,9 @@
             <div class="left">
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>陵园浏览记录</el-breadcrumb-item>
+                    <el-breadcrumb-item>留言</el-breadcrumb-item>
                 </el-breadcrumb>
-                <span class="them">陵园浏览记录</span>
+                <span class="them">留言</span>
             </div>
         </div>
         <div class="form">
@@ -54,25 +54,31 @@
                         width="200">
                     <template slot-scope="scope">
                         <div class="spic" v-if="scope.row.picurl!==null">
-                            <img :src="`https://syyl.shangyu.gov.cn/${scope.row.picurl}`" alt="">
+                            <img :src="`https://cn-flt.com/${scope.row.picurl}`" alt="">
                         </div>
 
                     </template>
                 </el-table-column>
                 <el-table-column
                         prop="number"
-                        label="陵园名称"
+                        label="留言内容"
                         align="center"
-                        width="200">
+                        width="150">
+                </el-table-column>
+                <el-table-column
+                        prop="number"
+                        label="烈士名称"
+                        align="center"
+                        width="150">
                 </el-table-column>
                 <el-table-column
                         prop="picurl"
-                        label="陵园图"
+                        label="烈士图"
                         align="center"
-                       >
+                        width="200">
                     <template slot-scope="scope">
                         <div class="spic" v-if="scope.row.picurl!==null">
-                            <img :src="`https://syyl.shangyu.gov.cn/${scope.row.picurl}`" alt="">
+                            <img :src="`https://cn-flt.com/${scope.row.picurl}`" alt="">
                         </div>
 
                     </template>
@@ -81,18 +87,22 @@
                         prop="created_at"
                         label="创建时间"
                         align="center"
-                        >
+                        width="200">
                 </el-table-column>
-<!--                <el-table-column-->
-<!--                        label="操作"-->
-<!--                        align="center">-->
-<!--                    <template slot-scope="scope">-->
-<!--                        <el-button-->
-<!--                                size="mini"-->
-<!--                                type="primary"-->
-<!--                                @click="handleShow(scope.$index, scope.row.id)">查看</el-button>-->
-<!--                    </template>-->
-<!--                </el-table-column>-->
+                <el-table-column
+                        label="操作"
+                        align="center">
+                    <template slot-scope="scope">
+                        <el-button
+                                size="mini"
+                                type="primary"
+                                @click="handleShow(scope.$index, scope.row.id)">查看</el-button>
+                        <el-button
+                                size="mini"
+                                type="danger"
+                                @click="handleShow(scope.$index, scope.row.id)">删除</el-button>
+                    </template>
+                </el-table-column>
             </el-table>
             <div class="pager">
                 <el-pagination
@@ -108,21 +118,11 @@
 
 
 <!--               查看详情-->
-        <el-dialog title="信息详情" :visible.sync="dialogTableVisible" >
+        <el-dialog title="留言详情" :visible.sync="dialogTableVisible" >
             <el-form :model="form"   label-width="100px">
-                <el-form-item label="标题" >
-                    <el-input  v-model="form.discount" autocomplete="off" :readonly="readonly" ></el-input>
-                </el-form-item>
-                <el-form-item label="图片" >
-                    <div class="pic">
-                        <img :src="circleUrl" alt="">
-                    </div>
-                </el-form-item>
-                <el-form-item label="详情" >
-                    <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 8}"  v-model="form.remarks" autocomplete="off" :readonly="readonly" ></el-input>
-                </el-form-item>
-                <el-form-item label="创建时间" >
-                    <el-input  v-model="form.created_at" autocomplete="off" :readonly="readonly" ></el-input>
+                <el-form-item label="留言内容" >
+                    <el-input  v-model="form.discount" autocomplete="off" type="textarea"
+                               :rows="5" :readonly="readonly" ></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -131,32 +131,7 @@
             </div>
         </el-dialog>
 
-        <!--               订单编辑-->
-        <el-dialog title="编辑订单" :visible.sync="EditdialogTableVisible" >
-            <el-form :model="form"   label-width="100px">
-                <el-form-item label="订单编号" >
-                    <el-input  v-model="form.number" autocomplete="off" :readonly="readonly" ></el-input>
-                </el-form-item>
-                <el-form-item label="订单状态" >
-                    <el-select v-model="form.status" @change="changeType2">
-                        <el-option
 
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="订单备注" >
-                    <el-input    type="textarea" :autosize="{ minRows: 4, maxRows: 8}" v-model="form.remarks" autocomplete="off" ></el-input>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogTableVisible=false">取 消</el-button>
-                <el-button type="primary" @click="confirmEdit">确 定</el-button>
-            </div>
-        </el-dialog>
 
 
 

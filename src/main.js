@@ -12,7 +12,7 @@ import 'mavon-editor/dist/css/index.css'
 Vue.use(mavonEditor)
 
 Vue.use(ElementUI);
-axios.defaults.baseURL = 'https://cn-flt.com/';
+axios.defaults.baseURL = 'https://syyl.shangyu.gov.cn';
 Vue.prototype.$axios = axios
 
 Vue.config.productionTip = false

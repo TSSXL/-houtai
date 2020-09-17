@@ -24,37 +24,19 @@
                         prop="nickname"
                         label="昵称"
                         align="center"
-                        width="120">
+                        width="300">
                 </el-table-column>
                 <el-table-column
-                        prop="realname"
-                        label="真实姓名"
+                        prop="head_pic"
+                        label="缩略图"
                         align="center"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="sex"
-                        label="性别"
-                        align="center"
-                        width="200">
-                </el-table-column>
-                <el-table-column
-                        prop="birth"
-                        label="生日"
-                        align="center"
-                        width="200">
-                </el-table-column>
-                <el-table-column
-                        prop="phone"
-                        label="手机号"
-                        align="center"
-                        width="200">
-                </el-table-column>
-                <el-table-column
-                        prop="email"
-                        label="邮箱"
-                        align="center"
-                        width="200">
+                        width="300">
+                    <template slot-scope="scope">
+                        <div class="spic" v-if="scope.row.head_pic!==null">
+                            <img :src="scope.row.head_pic" alt="" style="border-radius: 50%;width:80px;height:80px;">
+                        </div>
+
+                    </template>
                 </el-table-column>
                 <el-table-column
                         label="操作"
@@ -64,13 +46,13 @@
                                 size="mini"
                                 type="primary"
                                 @click="handleShow(scope.$index, scope.row)">查看</el-button>
-                        <el-button
-                                size="mini"
-                                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button
-                                size="mini"
-                                type="danger"
-                                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+<!--                        <el-button-->
+<!--                                size="mini"-->
+<!--                                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
+<!--                        <el-button-->
+<!--                                size="mini"-->
+<!--                                type="danger"-->
+<!--                                @click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
                     </template>
                 </el-table-column>
             </el-table>
@@ -82,42 +64,12 @@
             <el-form :model="form"   label-width="100px">
                 <el-form-item label="头像" >
                     <div class="pic">
-                        <img :src="circleUrl" alt="">
-                    </div>
-                </el-form-item>
-                <el-form-item label="二维码" >
-                    <div class="pic">
-                        <img src="../assets/code.png" alt="">
+                        <img :src="form.head_pic" alt="">
                     </div>
                 </el-form-item>
                 <el-form-item label="昵称" >
-                    <el-input v-model="form.name" autocomplete="off" :readonly="readonly"></el-input>
+                    <el-input v-model="form.nickname" autocomplete="off" :readonly="readonly"></el-input>
                 </el-form-item>
-                <el-form-item label="真实姓名" >
-                    <el-input v-model="form.realName" autocomplete="off" :readonly="readonly"></el-input>
-                </el-form-item>
-                <el-form-item label="性别" >
-                    <el-input v-model="form.sex" autocomplete="off" :readonly="readonly"></el-input>
-                </el-form-item>
-                <el-form-item label="生日" >
-                    <el-input v-model="form.birth" autocomplete="off" :readonly="readonly"></el-input>
-                </el-form-item>
-                <el-form-item label="手机号" >
-                    <el-input v-model="form.phone" autocomplete="off" :readonly="readonly"></el-input>
-                </el-form-item>
-                <el-form-item label="邮箱" >
-                    <el-input v-model="form.email" autocomplete="off" :readonly="readonly"></el-input>
-                </el-form-item>
-                <el-form-item label="所在城市" >
-                    <el-input v-model="form.city" autocomplete="off" :readonly="readonly"></el-input>
-                </el-form-item>
-                <el-form-item label="收货地址" >
-                    <el-input v-model="form.address" autocomplete="off" :readonly="readonly"></el-input>
-                </el-form-item>
-                <el-form-item label="入会时间" >
-                    <el-input v-model="form.time" autocomplete="off" :readonly="readonly"></el-input>
-                </el-form-item>
-
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogTableVisible=false">取 消</el-button>
@@ -141,45 +93,8 @@
                         <i class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="二维码" >
-                    <el-upload
-                            class="avatar-uploader"
-                            action="#"
-                            :limit="1"
-                            list-type="picture-card"
-                            :file-list="fileList2"
-                            :on-change="handleUploadChange4"
-                            :auto-upload="false"
-                    >
-                        <i class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
-                </el-form-item>
                 <el-form-item label="昵称" >
-                    <el-input v-model="form.name" autocomplete="off" :readonly="Editreadonly"></el-input>
-                </el-form-item>
-                <el-form-item label="真实姓名" >
-                    <el-input v-model="form.realName" autocomplete="off" :readonly="Editreadonly"></el-input>
-                </el-form-item>
-                <el-form-item label="性别" >
-                    <el-input v-model="form.sex" autocomplete="off" :readonly="Editreadonly"></el-input>
-                </el-form-item>
-                <el-form-item label="生日" >
-                    <el-input v-model="form.birth" autocomplete="off" :readonly="Editreadonly"></el-input>
-                </el-form-item>
-                <el-form-item label="手机号" >
-                    <el-input v-model="form.phone" autocomplete="off" :readonly="Editreadonly"></el-input>
-                </el-form-item>
-                <el-form-item label="邮箱" >
-                    <el-input v-model="form.email" autocomplete="off" :readonly="Editreadonly"></el-input>
-                </el-form-item>
-                <el-form-item label="所在城市" >
-                    <el-input v-model="form.city" autocomplete="off" :readonly="Editreadonly"></el-input>
-                </el-form-item>
-                <el-form-item label="收货地址" >
-                    <el-input v-model="form.address" autocomplete="off" :readonly="Editreadonly"></el-input>
-                </el-form-item>
-                <el-form-item label="入会时间" >
-                    <el-input v-model="form.time" autocomplete="off" :readonly="Editreadonly"></el-input>
+                    <el-input v-model="form.nickname" autocomplete="off" :readonly="Editreadonly"></el-input>
                 </el-form-item>
 
             </el-form>
@@ -207,71 +122,71 @@
                 dialogTableVisible:false,
                 EditdialogTableVisible:false,
                 tableData: [
-                    {
-                        name:'用户1',
-                        realName:'张小明',
-                        sex:'男',
-                        birth:'1990/09/09',
-                        phone:'13257741212',
-                        email:'132456@qq.com',
-                        img:require('../assets/code.png'),
-                        code:require('../assets/code.png'),
-                        city:'浙江省宁波市',
-                        address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
-                        time:'2020-8-8'
-                    },
-                    {
-                        name:'用户2',
-                        realName:'张应明',
-                        sex:'女',
-                        birth:'1990/09/09',
-                        phone:'13257741212',
-                        email:'132456@qq.com',
-                        img:require('../assets/code.png'),
-                        code:require('../assets/code.png'),
-                        city:'浙江省宁波市',
-                        address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
-                        time:'2020-8-9'
-                    },
-                    {
-                        name:'用户4',
-                        realName:'张小明',
-                        sex:'男',
-                        birth:'1990/09/09',
-                        phone:'13257741212',
-                        email:'132456@qq.com',
-                        img:require('../assets/code.png'),
-                        code:require('../assets/code.png'),
-                        city:'浙江省宁波市',
-                        address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
-                        time:'2020-8-10'
-                    },
-                    {
-                        name:'用户4',
-                        realName:'张小明',
-                        sex:'男',
-                        birth:'1990/09/09',
-                        phone:'13257741212',
-                        email:'132456@qq.com',
-                        img:require('../assets/code.png'),
-                        code:require('../assets/code.png'),
-                        city:'浙江省宁波市',
-                        address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
-                        time:''
-                    },
-                    {
-                        name:'用户5',
-                        realName:'张小明',
-                        sex:'男',
-                        birth:'1990/09/09',
-                        phone:'13257741212',
-                        email:'132456@qq.com',
-                        img:require('../assets/code.png'),
-                        code:require('../assets/code.png'),
-                        city:'浙江省宁波市',
-                        address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
-                        time:''
-                    }
+                    // {
+                    //     name:'用户1',
+                    //     realName:'张小明',
+                    //     sex:'男',
+                    //     birth:'1990/09/09',
+                    //     phone:'13257741212',
+                    //     email:'132456@qq.com',
+                    //     img:require('../assets/code.png'),
+                    //     code:require('../assets/code.png'),
+                    //     city:'浙江省宁波市',
+                    //     address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
+                    //     time:'2020-8-8'
+                    // },
+                    // {
+                    //     name:'用户2',
+                    //     realName:'张应明',
+                    //     sex:'女',
+                    //     birth:'1990/09/09',
+                    //     phone:'13257741212',
+                    //     email:'132456@qq.com',
+                    //     img:require('../assets/code.png'),
+                    //     code:require('../assets/code.png'),
+                    //     city:'浙江省宁波市',
+                    //     address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
+                    //     time:'2020-8-9'
+                    // },
+                    // {
+                    //     name:'用户4',
+                    //     realName:'张小明',
+                    //     sex:'男',
+                    //     birth:'1990/09/09',
+                    //     phone:'13257741212',
+                    //     email:'132456@qq.com',
+                    //     img:require('../assets/code.png'),
+                    //     code:require('../assets/code.png'),
+                    //     city:'浙江省宁波市',
+                    //     address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
+                    //     time:'2020-8-10'
+                    // },
+                    // {
+                    //     name:'用户4',
+                    //     realName:'张小明',
+                    //     sex:'男',
+                    //     birth:'1990/09/09',
+                    //     phone:'13257741212',
+                    //     email:'132456@qq.com',
+                    //     img:require('../assets/code.png'),
+                    //     code:require('../assets/code.png'),
+                    //     city:'浙江省宁波市',
+                    //     address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
+                    //     time:''
+                    // },
+                    // {
+                    //     name:'用户5',
+                    //     realName:'张小明',
+                    //     sex:'男',
+                    //     birth:'1990/09/09',
+                    //     phone:'13257741212',
+                    //     email:'132456@qq.com',
+                    //     img:require('../assets/code.png'),
+                    //     code:require('../assets/code.png'),
+                    //     city:'浙江省宁波市',
+                    //     address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
+                    //     time:''
+                    // }
                 ],
                 form:{}
             }
@@ -290,7 +205,6 @@
                 const url = `${getUser()}`
                 this.$axios.post(url).then(res => {
                     this.tableData=res.data.data.data
-                   console.log( this.tableData )
                 })
             },
             addOne(){
@@ -304,7 +218,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "httpss://cloud.carbonconf.cn/common/uploadImg.php";
+                    const url = "https://cloud.carbonconf.cn/common/uploadImg.php";
                     this.$axios
                         .post(url, formData, {
                             headers: {
@@ -358,13 +272,12 @@
             },
             handleShow(index, row) {
                 this.form=row
-                console.log(index,row)
                    this.dialogTableVisible=true
             },
         handleEdit(index, row) {
             this.form=row
                 this.EditdialogTableVisible=true
-        console.log(index, row);
+            this.fileList.push({url:row.head_pic})
     },
     handleDelete(index, row) {
                 this.delete()
