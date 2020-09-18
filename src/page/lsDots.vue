@@ -23,6 +23,21 @@
                 <!--                    </el-select>-->
 
                 <!--                </div>-->
+
+                <div class="search" style="display: flex;flex-direction: row;">
+                    <el-input v-model="search" placeholder="请输入要搜索的烈士墓" @change="searchVal" style="margin: 0 20px"></el-input>
+                    <el-select v-model="form.town" clearable  placeholder="请选择城镇" @change="searchVal2">
+                        <el-option
+                                v-for="item in options"
+                                :key="item"
+                                :label="item"
+                                :value="item">
+                        </el-option>
+                    </el-select>
+                </div>
+
+
+
                 <div class="refresh" @click="shuaxin">
                     <i class="el-icon-refresh-right"></i>
                 </div>
@@ -241,6 +256,9 @@
         name: "user",
         data(){
             return{
+                title:'',
+                val:'',
+                search:'',
                 options:[
                     '曹娥街道',
                     '陈溪乡',
@@ -291,6 +309,36 @@
             },100)
         },
         methods:{
+            searchVal(val){
+                this.title=val
+                const url = `${getTomb()}`
+                this.$axios.post(url,qs.stringify(
+                    {
+                        page:1,
+                        title:val,
+                        town:this.town
+                    }
+                )).then(res => {
+                    this.tableData=res.data.data.data
+                    this.totalPage=res.data.data.last_page
+                    this.Currentpage=1
+                })
+            },
+            searchVal2(val){
+                this.town=val
+                const url = `${getTomb()}`
+                this.$axios.post(url,qs.stringify(
+                    {
+                        page:1,
+                        title:this.title,
+                        town:val
+                    }
+                )).then(res => {
+                    this.tableData=res.data.data.data
+                    this.totalPage=res.data.data.last_page
+                    this.Currentpage=1
+                })
+            },
             shuaxin(){
                 location.reload()
             },

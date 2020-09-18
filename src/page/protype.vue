@@ -23,6 +23,9 @@
                 <!--                    </el-select>-->
 
                 <!--                </div>-->
+                <div class="search" style="margin-left: 20px">
+                    <el-input v-model="search" placeholder="请输入要搜索的烈士" @change="searchVal"></el-input>
+                </div>
                 <div class="refresh" @click="shuaxin">
                     <i class="el-icon-refresh-right"></i>
                 </div>
@@ -397,6 +400,7 @@
         name: "user",
         data(){
             return{
+                search:'',
                 lyList:[],
                 lsList:[],
                 activeNum:1,
@@ -446,6 +450,20 @@
             },100)
         },
         methods:{
+            searchVal(val){
+                const url = `${getMartyr()}`
+                this.$axios.post(url,qs.stringify(
+                    {
+                        page:1,
+                        name:val
+
+                    }
+                )).then(res => {
+                    this.tableData=res.data.data.data
+                    this.totalPage=res.data.data.last_page
+                    this.Currentpage=1
+                })
+            },
             shuaxin(){
                 location.reload()
             },
