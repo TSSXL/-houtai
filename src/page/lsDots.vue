@@ -257,6 +257,7 @@
         data(){
             return{
                 title:'',
+                page:'',
                 val:'',
                 search:'',
                 options:[
@@ -359,6 +360,7 @@
             },
             // 分页
             handleCurrentChange(val) {
+                this.page=val
                 if(val<=this.totalPage){
                     this.$nextTick(()=>{
                         const url = `${getTomb()}`
@@ -420,7 +422,14 @@
                             message: '修改成功',
                             type: 'success'
                         });
-                        this.getList()
+                        const url = `${getTomb()}`
+                        this.$axios.post(url,qs.stringify(
+                            {
+                                page:this.page
+                            }
+                        )).then(res => {
+                            this.tableData=res.data.data.data
+                        })
                     }
                 })
             },
@@ -434,7 +443,14 @@
                                 message: '已删除',
                                 type: 'success'
                             });
-                            this.getList()
+                            const url = `${getTomb()}`
+                            this.$axios.post(url,qs.stringify(
+                                {
+                                    page:this.page
+                                }
+                            )).then(res => {
+                                this.tableData=res.data.data.data
+                            })
                         }
                     });
             },

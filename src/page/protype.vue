@@ -400,6 +400,7 @@
         name: "user",
         data(){
             return{
+                page:'',
                 search:'',
                 lyList:[],
                 lsList:[],
@@ -488,6 +489,7 @@
             },
             // 分页
             handleCurrentChange(val) {
+                this.page=val
                 if(val<=this.totalPage){
                     this.$nextTick(()=>{
                         const url = `${getMartyr()}`
@@ -567,7 +569,14 @@
                             message: '修改成功',
                             type: 'success'
                         });
-                        this.getList()
+                        const url = `${getMartyr()}`
+                        this.$axios.post(url,qs.stringify(
+                            {
+                                page:this.page
+                            }
+                        )).then(res => {
+                            this.tableData=res.data.data.data
+                        })
                     }
                 })
             },
@@ -602,7 +611,14 @@
                                 message: '已删除',
                                 type: 'success'
                             });
-                            this.getList()
+                            const url = `${getMartyr()}`
+                            this.$axios.post(url,qs.stringify(
+                                {
+                                    page:this.page
+                                }
+                            )).then(res => {
+                                this.tableData=res.data.data.data
+                            })
                         }
                     });
             },
