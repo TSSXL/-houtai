@@ -10,24 +10,30 @@
             </div>
         </div>
         <div class="form">
-<!--            <div class="add">-->
-<!--                <el-button type="primary" @click="addOne">添加公告</el-button>-->
-<!--                &lt;!&ndash;                <div class="chose">&ndash;&gt;-->
-<!--                &lt;!&ndash;                    <el-select v-model="value" placeholder="请选择产品分类">&ndash;&gt;-->
-<!--                &lt;!&ndash;                        <el-option&ndash;&gt;-->
-<!--                &lt;!&ndash;                                v-for="item in options"&ndash;&gt;-->
-<!--                &lt;!&ndash;                                :key="item.value"&ndash;&gt;-->
-<!--                &lt;!&ndash;                                :label="item.label"&ndash;&gt;-->
-<!--                &lt;!&ndash;                                :value="item.value">&ndash;&gt;-->
-<!--                &lt;!&ndash;                        </el-option>&ndash;&gt;-->
-<!--                &lt;!&ndash;                    </el-select>&ndash;&gt;-->
 
-<!--                &lt;!&ndash;                </div>&ndash;&gt;-->
+            <div class="add">
+
+                <div class="search" style="margin-left: 20px;display: flex;flex-direction: row;">
+                    <el-input v-model="message" placeholder="请输入要搜索的内容" @change="searchVal"></el-input>
+                    <el-input v-model="nickname" placeholder="请输入要搜索的姓名" @change="searchVal" style="margin-left: 30px"></el-input>
+                </div>
+<!--                <el-button type="primary" @click="addOne">添加公告</el-button>-->
+                <!--                <div class="chose">-->
+                <!--                    <el-select v-model="value" placeholder="请选择产品分类">-->
+                <!--                        <el-option-->
+                <!--                                v-for="item in options"-->
+                <!--                                :key="item.value"-->
+                <!--                                :label="item.label"-->
+                <!--                                :value="item.value">-->
+                <!--                        </el-option>-->
+                <!--                    </el-select>-->
+
+                <!--                </div>-->
 <!--                <div class="refresh" @click="shuaxin">-->
 <!--                    <i class="el-icon-refresh-right"></i>-->
 <!--                </div>-->
 
-<!--            </div>-->
+            </div>
             <el-table
                     :data="tableData"
                     border
@@ -246,12 +252,21 @@
 </template>
 
 <script>
-    import  {getMessage,editNotice,changeMessage,deleteMessage,addNotice,updateNotice} from "../util/lang";
+    import {
+        getMessage,
+        editNotice,
+        changeMessage,
+        deleteMessage,
+        addNotice,
+        updateNotice
+    } from "../util/lang";
     import  qs from 'qs'
     export default {
         name: "user",
         data(){
             return{
+                message:'',
+                nickname:'',
                 isUpload:true,
                 activeNum:1,
                 index:0,
@@ -291,6 +306,20 @@
             },100)
         },
         methods:{
+            searchVal(){
+                const url = `${getMessage()}`
+                this.$axios.post(url,qs.stringify(
+                    {
+                        page:1,
+                        message:this.message,
+                        nickname:this.nickname
+                    }
+                )).then(res => {
+                    this.tableData=res.data.data.data
+                    this.totalPage=res.data.data.last_page
+                    this.Currentpage=1
+                })
+            },
             shuaxin(){
                 location.reload()
             },
