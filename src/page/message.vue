@@ -39,6 +39,29 @@
                         >
                 </el-table-column>
                 <el-table-column
+                        prop="nickname"
+                        label="留言人"
+                        align="center"
+                >
+                </el-table-column>
+                <el-table-column
+                        prop="head_pic"
+                        label="头像"
+                        align="center"
+                        width="300">
+                    <template slot-scope="scope">
+                        <div class="spic" v-if="scope.row.head_pic!==null">
+                            <img :src="scope.row.head_pic" alt="" style="border-radius: 50%;width:80px;height:80px;">
+                        </div>
+
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        prop="name"
+                        label="留言对象"
+                        align="center"
+                ></el-table-column>
+                <el-table-column
                         prop="message"
                         label="留言内容"
                         align="center"
