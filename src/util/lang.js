@@ -253,6 +253,63 @@ export const getUser = () => {
 }
 
 
+//获取留言的内容
+export const getMessage = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/getMessage`
+}
 
 
+
+//改变留言状态
+export const changeMessage = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/changeMessage`
+}
+
+
+//删除留言的内容
+export const deleteMessage= (id) => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/deleteMessage?id=${id}`
+}
+
+
+
+
+//获取网站内容
+export const getContent = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/getContent`
+}
+
+
+
+//添加公告的内容
+export const addContent = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/addContent`
+}
+
+
+
+//查看网站内容
+export const editContent = (id) => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/editContent?id=${id}`
+}
+
+
+//删除网站内容
+export const deleteContent= (id) => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/deleteContent?id=${id}`
+}
+
+
+//修改网站内容
+export const updateContent = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/updateContent`
+}
 

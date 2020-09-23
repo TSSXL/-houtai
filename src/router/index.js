@@ -13,6 +13,7 @@ import Lsdots from '../page/lsDots.vue'
 import Message from '../page/message.vue'
 import People from '../page/people.vue'
 import Books from '../page/books.vue'
+import Himg from '../page/hImg.vue'
 
 
 Vue.use(VueRouter)
@@ -58,6 +59,10 @@ const routes = [{
             {
                 path: '/books',
                 component: Books
+            },
+            {
+                path: '/hImg',
+                component: Himg
             }
         ]
     },

@@ -122,10 +122,10 @@ export default {
         15: "iconfont iconanquan",
       },
       menuList: [
-        // {
-        //   name: "首页",
-        //   path: "home",
-        // },
+        {
+          name: "网站内容",
+          path: "hImg",
+        },
         {
           name: "会员管理",
           path: "user",
@@ -145,11 +145,11 @@ export default {
         {
           name: "公告",
           path: "books",
+        },
+        {
+          name: "留言",
+          path: "message",
         }
-        // {
-        //   name: "留言",
-        //   path: "message",
-        // }
       ]
     };
   },
