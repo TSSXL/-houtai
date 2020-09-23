@@ -14,8 +14,16 @@
             <div class="add">
 
                 <div class="search" style="margin-left: 20px;display: flex;flex-direction: row;">
-                    <el-input v-model="message" placeholder="请输入要搜索的内容" @change="searchVal"></el-input>
-                    <el-input v-model="nickname" placeholder="请输入要搜索的姓名" @change="searchVal" style="margin-left: 30px"></el-input>
+                    <el-input v-model="message" placeholder="请输入要搜索的内容" @change="searchVal" style="width:30%;"></el-input>
+                    <el-input v-model="nickname" placeholder="请输入要搜索的姓名" @change="searchVal" style="margin-left: 30px;width:30%;"></el-input>
+                                        <el-select v-model="checkinfo" placeholder="请选择是否显示" @change="searchVal2" style="margin-left: 30px;width:30%;">
+                                            <el-option
+                                                    v-for="item in showList"
+                                                    :key="item.value"
+                                                    :label="item.label"
+                                                    :value="item.value">
+                                            </el-option>
+                                        </el-select>
                 </div>
 <!--                <el-button type="primary" @click="addOne">添加公告</el-button>-->
                 <!--                <div class="chose">-->
@@ -265,6 +273,17 @@
         name: "user",
         data(){
             return{
+                showList:[
+                    {
+                        label:'是',
+                        value:1
+                    },
+                    {
+                        label:'否',
+                        value:0
+                    }
+                ],
+                checkinfo:'',
                 message:'',
                 nickname:'',
                 isUpload:true,
@@ -312,9 +331,27 @@
                     {
                         page:1,
                         message:this.message,
-                        nickname:this.nickname
+                        nickname:this.nickname,
+                        checkinfo:this.checkinfo
                     }
                 )).then(res => {
+                    this.tableData=res.data.data.data
+                    this.totalPage=res.data.data.last_page
+                    this.Currentpage=1
+                })
+            },
+            searchVal2(val){
+                this.checkinfo=val
+                const url = `${getMessage()}`
+                this.$axios.post(url,qs.stringify(
+                    {
+                        page:1,
+                        message:this.message,
+                        nickname:this.nickname,
+                        checkinfo:val
+                    }
+                )).then(res => {
+                    console.log(res.data)
                     this.tableData=res.data.data.data
                     this.totalPage=res.data.data.last_page
                     this.Currentpage=1
