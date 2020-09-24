@@ -12,17 +12,17 @@
         <div class="form">
                         <div class="add">
                             <el-button type="primary" @click="addOne">添加图片</el-button>
-                            <!--                <div class="chose">-->
-                            <!--                    <el-select v-model="value" placeholder="请选择产品分类">-->
-                            <!--                        <el-option-->
-                            <!--                                v-for="item in options"-->
-                            <!--                                :key="item.value"-->
-                            <!--                                :label="item.label"-->
-                            <!--                                :value="item.value">-->
-                            <!--                        </el-option>-->
-                            <!--                    </el-select>-->
+                                            <div class="chose">
+                                                <el-select v-model="value" placeholder="请选择类别" @change="searchVal">
+                                                    <el-option
+                                                            v-for="item in options"
+                                                            :key="item.value"
+                                                            :label="item.label"
+                                                            :value="item.value">
+                                                    </el-option>
+                                                </el-select>
 
-                            <!--                </div>-->
+                                            </div>
                             <div class="refresh" @click="shuaxin">
                                 <i class="el-icon-refresh-right"></i>
                             </div>
@@ -54,6 +54,15 @@
                             <img :src="`https://syyl.shangyu.gov.cn/${scope.row.picurl}`" alt="" style="border-radius: 50%;width:80px;height:80px;">
                         </div>
 
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        prop="type"
+                        label="类型"
+                        align="center"
+                >
+                    <template slot-scope="scope">
+                        <p>{{scope.row.type | filterText}}</p>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -94,6 +103,17 @@
                     <el-input  v-model="form.title" autocomplete="off" placeholder="请输入标题" ></el-input>
                 </el-form-item>
 
+                <el-form-item label="类别" >
+                                        <el-select v-model="form.type" placeholder="请选择类别">
+                                            <el-option
+                                                    v-for="item in options"
+                                                    :key="item.value"
+                                                    :label="item.label"
+                                                    :value="item.value">
+                                            </el-option>
+                                        </el-select>
+                </el-form-item>
+
                 <el-form-item label="缩略图" >
                     <el-upload
                             class="avatar-uploader"
@@ -124,6 +144,18 @@
                     <el-input  v-model="form.title" autocomplete="off" placeholder="请输入标题" :readonly="readonly"></el-input>
                 </el-form-item>
 
+                <el-form-item label="类别" >
+                    <el-select v-model="form.type" placeholder="请选择类别">
+                        <el-option disabled
+                                v-for="item in options"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+
+
                 <el-form-item label="缩略图" >
                     <div class="pic">
                         <img  :src="`https://syyl.shangyu.gov.cn/${form.picurl}`" alt="" :key="index">
@@ -145,6 +177,18 @@
                         <el-form-item label="标题" >
                             <el-input  v-model="form.title" autocomplete="off" placeholder="请输入标题" ></el-input>
                         </el-form-item>
+
+                        <el-form-item label="类别" >
+                            <el-select v-model="form.type" placeholder="请选择类别">
+                                <el-option
+                                        v-for="item in options"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+
 
                         <el-form-item label="缩略图" >
                             <el-upload
@@ -182,6 +226,16 @@
         name: "user",
         data(){
             return{
+                options:[
+                    {
+                        label:'弹窗',
+                        value:1
+                    },
+                    {
+                        label:'banner',
+                        value:2
+                    }
+                ],
                 fileList: [],
                 fileList2:[],
                 isUpload:true,
@@ -202,21 +256,20 @@
                     title:'',
                     content:'',
                     created_at:'',
-                    checkinfo:1
+                    checkinfo:1,
+                    type:1
                 }
             }
         },
-        // filters:{
-        //     dataFormat(n) {
-        //         if(n=='a'){
-        //             return '产品分类一'
-        //         }else if(n=='b'){
-        //             return '产品分类二'
-        //         }else{
-        //             return '产品分类三'
-        //         }
-        //     }
-        // },
+        filters:{
+            filterText(n) {
+                if(n==1){
+                    return '弹窗'
+                }else if(n==2){
+                    return 'banner'
+                }
+            }
+        },
         mounted(){
             setTimeout(()=>{
                 this.getList()
@@ -277,11 +330,25 @@
                     this.Currentpage=1
                 })
             },
+            searchVal(val){
+                const url = `${getContent()}`
+                this.$axios.post(url,qs.stringify(
+                    {
+                        page:1,
+                        type:val
+                    }
+                )).then(res => {
+                    this.tableData=res.data.data.data
+                    this.totalPage=res.data.data.last_page
+                    this.Currentpage=1
+                })
+            },
             addOne(){
                 this.fileList=[]
                 this.form={
                     title:'',
-                     picurl:''
+                     picurl:'',
+                    type:1
                 }
                 this.AddialogTableVisible=true
             },
