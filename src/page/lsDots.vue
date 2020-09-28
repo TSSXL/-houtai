@@ -685,7 +685,13 @@
                     title:'',
                     checkinfo:1,
                     town:'',
-                    map:''
+                    map:'',
+                    picarr:[
+                        {
+                            p_name:'',
+                            spic:''
+                        }
+                    ]
                 }
             }
         },
@@ -713,6 +719,28 @@
             handleRemove2(fileList) {
                 this.form.picurl=''
                 console.log(fileList)
+            },
+            handleUploadChange4(file) {
+                const isLt2M = file.size / 1024 / 1024 < 2;
+                if (!isLt2M) {
+                    this.$message.error("上传的图片大小不能超过2M！");
+                } else {
+                    const formData = new FormData(); // 声明一个FormData对象
+                    formData.append("file", file.raw);
+                    const url = "https://syyl.shangyu.gov.cn/api/Upload";
+                    this.$axios
+                        .post(url, formData, {
+                            headers: {
+                                "content-type": "multer/form-data"
+                            }
+                        })
+                        .then(res => {
+                            if (res.data.code === 200) {
+                                this.isUpload=false
+                                this.form.picarr[this.index].spic=res.data.path
+                            }
+                        });
+                }
             },
             handleUploadChange5(file) {
                 const isLt2M = file.size / 1024 / 1024 < 2;
@@ -880,6 +908,7 @@
             },
             handleAdd(){
                 let newForm=JSON.parse(JSON.stringify(this.form))
+                newForm.picarr=JSON.stringify(this.form.picarr)
                 const url = `${addTomb()}`
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
@@ -895,6 +924,7 @@
             confirmEdit(){
                 this.EditdialogTableVisible=false
                 let newForm=JSON.parse(JSON.stringify(this.form))
+                newForm.picarr=JSON.stringify(this.form.picarr)
                 const url = `${updateTomb()}`
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
@@ -946,6 +976,10 @@
                         }
                     });
             },
+            // 对应图片上传
+            getIndex(n){
+                this.index=n
+            },
             // 编辑详情
             handleEdit(row) {
                 this.fileList3=[]
@@ -964,6 +998,13 @@
                                     this.form.picarr.map((item)=>{
                                         this.fileList3.push({url:'http://syyl.shangyu.gov.cn'+item})
                                     })
+                                }else{
+                                    this.form.picarr=[
+                                        {
+                                            p_name:'',
+                                            spic:''
+                                        }
+                                    ]
                                 }
 
 
