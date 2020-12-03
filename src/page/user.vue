@@ -10,12 +10,12 @@
             </div>
         </div>
         <div class="form">
-            <div class="add">
-                <el-button type="primary" @click="addOne">添加会员</el-button>
-                <div class="refresh" @click="shuaxin">
-                    <i class="el-icon-refresh-right"></i>
-                </div>
-            </div>
+<!--            <div class="add">-->
+<!--                <el-button type="primary" @click="addOne">添加会员</el-button>-->
+<!--                <div class="refresh" @click="shuaxin">-->
+<!--                    <i class="el-icon-refresh-right"></i>-->
+<!--                </div>-->
+<!--            </div>-->
             <el-table
                     :data="tableData"
                     border
@@ -25,6 +25,12 @@
                         label="昵称"
                         align="center"
                         width="300">
+                </el-table-column>
+                <el-table-column
+                        prop="phone"
+                        label="手机号"
+                        align="center"
+                        width="200">
                 </el-table-column>
                 <el-table-column
                         prop="head_pic"
@@ -70,6 +76,9 @@
                 <el-form-item label="昵称" >
                     <el-input v-model="form.nickname" autocomplete="off" :readonly="readonly"></el-input>
                 </el-form-item>
+                <el-form-item label="手机号" >
+                    <el-input v-model="form.phone" autocomplete="off" :readonly="readonly"></el-input>
+                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogTableVisible=false">取 消</el-button>
@@ -104,16 +113,28 @@
             </div>
         </el-dialog>
 
+<!--        <el-tooltip placement="top" content="返回顶部">-->
+<!--            <back-to-top :custom-style="myBackToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />-->
+<!--        </el-tooltip>-->
+
     </div>
 </template>
 
 <script>
     import {getUser} from "../util/lang";
-
     export default {
         name: "user",
         data(){
             return{
+                myBackToTopStyle: {
+                    right: '50px',
+                    bottom: '50px',
+                    width: '40px',
+                    height: '40px',
+                    'border-radius': '4px',
+                    'line-height': '45px', // 请保持与高度一致以垂直居中 Please keep consistent with height to center vertically
+                    background: '#e7eaf1'// 按钮的背景颜色 The background color of the button
+                },
                 fileList: [],
                 fileList2:[],
                 readonly:true,
@@ -204,7 +225,7 @@
             getList(){
                 const url = `${getUser()}`
                 this.$axios.post(url).then(res => {
-                    this.tableData=res.data.data.data
+                    this.tableData=res.data.data
                 })
             },
             addOne(){
