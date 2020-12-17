@@ -26,12 +26,12 @@
                         align="center"
                         width="300">
                 </el-table-column>
-                <el-table-column
-                        prop="phone"
-                        label="手机号"
-                        align="center"
-                        width="200">
-                </el-table-column>
+<!--                <el-table-column-->
+<!--                        prop="phone"-->
+<!--                        label="手机号"-->
+<!--                        align="center"-->
+<!--                        width="200">-->
+<!--                </el-table-column>-->
                 <el-table-column
                         prop="head_pic"
                         label="缩略图"
@@ -76,9 +76,9 @@
                 <el-form-item label="昵称" >
                     <el-input v-model="form.nickname" autocomplete="off" :readonly="readonly"></el-input>
                 </el-form-item>
-                <el-form-item label="手机号" >
-                    <el-input v-model="form.phone" autocomplete="off" :readonly="readonly"></el-input>
-                </el-form-item>
+<!--                <el-form-item label="手机号" >-->
+<!--                    <el-input v-model="form.phone" autocomplete="off" :readonly="readonly"></el-input>-->
+<!--                </el-form-item>-->
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogTableVisible=false">取 消</el-button>
@@ -142,73 +142,7 @@
                 circleUrl:'httpss://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
                 dialogTableVisible:false,
                 EditdialogTableVisible:false,
-                tableData: [
-                    // {
-                    //     name:'用户1',
-                    //     realName:'张小明',
-                    //     sex:'男',
-                    //     birth:'1990/09/09',
-                    //     phone:'13257741212',
-                    //     email:'132456@qq.com',
-                    //     img:require('../assets/code.png'),
-                    //     code:require('../assets/code.png'),
-                    //     city:'浙江省宁波市',
-                    //     address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
-                    //     time:'2020-8-8'
-                    // },
-                    // {
-                    //     name:'用户2',
-                    //     realName:'张应明',
-                    //     sex:'女',
-                    //     birth:'1990/09/09',
-                    //     phone:'13257741212',
-                    //     email:'132456@qq.com',
-                    //     img:require('../assets/code.png'),
-                    //     code:require('../assets/code.png'),
-                    //     city:'浙江省宁波市',
-                    //     address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
-                    //     time:'2020-8-9'
-                    // },
-                    // {
-                    //     name:'用户4',
-                    //     realName:'张小明',
-                    //     sex:'男',
-                    //     birth:'1990/09/09',
-                    //     phone:'13257741212',
-                    //     email:'132456@qq.com',
-                    //     img:require('../assets/code.png'),
-                    //     code:require('../assets/code.png'),
-                    //     city:'浙江省宁波市',
-                    //     address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
-                    //     time:'2020-8-10'
-                    // },
-                    // {
-                    //     name:'用户4',
-                    //     realName:'张小明',
-                    //     sex:'男',
-                    //     birth:'1990/09/09',
-                    //     phone:'13257741212',
-                    //     email:'132456@qq.com',
-                    //     img:require('../assets/code.png'),
-                    //     code:require('../assets/code.png'),
-                    //     city:'浙江省宁波市',
-                    //     address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
-                    //     time:''
-                    // },
-                    // {
-                    //     name:'用户5',
-                    //     realName:'张小明',
-                    //     sex:'男',
-                    //     birth:'1990/09/09',
-                    //     phone:'13257741212',
-                    //     email:'132456@qq.com',
-                    //     img:require('../assets/code.png'),
-                    //     code:require('../assets/code.png'),
-                    //     city:'浙江省宁波市',
-                    //     address:'福建省 建瓯市 徐墩镇 丰乐村黄城150号',
-                    //     time:''
-                    // }
-                ],
+                tableData: [],
                 form:{}
             }
         },
@@ -223,13 +157,13 @@
             },
             // 获取全部分类数据
             getList(){
-                const url = `${getUser()}`
+                const url = `${getUser()}`;
                 this.$axios.post(url).then(res => {
-                    this.tableData=res.data.data
+                    this.tableData=res.data.data.data
                 })
             },
             addOne(){
-                this.EditdialogTableVisible=true
+                this.EditdialogTableVisible=true;
                 this.form={}
             },
             handleUploadChange3(file) {
@@ -292,16 +226,16 @@
                 });
             },
             handleShow(index, row) {
-                this.form=row
+                this.form=row;
                    this.dialogTableVisible=true
             },
         handleEdit(index, row) {
-            this.form=row
-                this.EditdialogTableVisible=true
+            this.form=row;
+                this.EditdialogTableVisible=true;
             this.fileList.push({url:row.head_pic})
     },
     handleDelete(index, row) {
-                this.delete()
+                this.delete();
         console.log(index, row);
     }
         }
