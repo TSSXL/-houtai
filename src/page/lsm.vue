@@ -92,7 +92,7 @@
                 </el-form-item>
 
                 <el-form-item label="内容">
-                    <tinymce v-model="form.content" :height="500" @getHtml="getHtml" />
+                    <tinymce v-if="isShow2" v-model="form.content" :height="500" @getHtml="getHtml" />
                 </el-form-item>
 
 
@@ -145,7 +145,7 @@
                 </el-form-item>
 
                 <el-form-item label="内容">
-                    <tinymce v-model="form.content" :height="500" @getHtml="getHtml" />
+                    <tinymce v-if="isShow" v-model="form.content" :height="500" @getHtml="getHtml" />
                 </el-form-item>
 
                 <el-form-item label="排序">
@@ -173,6 +173,8 @@
         name: "user",
         data(){
             return{
+                isShow:false,
+                isShow2:false,
                 index:0,
                 Currentpage:1,
                 value: '',
@@ -271,10 +273,14 @@
                 this.fileList=[];
                 this.form={
                     title:'',
-                    content:`<h1>此区域可编辑</h1>`,
+                    content:'',
                     orderid:1
                 };
-                this.AddialogTableVisible=true
+                this.AddialogTableVisible=true;
+                this.isShow2=false;
+                setTimeout(()=>{
+                    this.isShow2=true
+                },100)
             },
             handleAdd(){
                 let newForm=JSON.parse(JSON.stringify(this.form));
@@ -332,15 +338,15 @@
             // 编辑详情
             handleEdit(row) {
                 this.fileList=[];
+                this.isShow=false;
                 setTimeout(()=>{
                     this.EditdialogTableVisible=true;
                     const url = `${editArticle(row.id)}`;
                     this.$axios.post(url)
                         .then(res => {
                             if (res.data.code===200) {
-
+                             this.isShow=true;
                                 this.form=res.data.data;
-
                                 if(this.form.picurl!==null && this.form.picurl!==""){
                                     this.fileList.push({url:'http://tyxxc.sansg.com'+this.form.picurl})
                                 }else{

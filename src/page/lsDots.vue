@@ -264,7 +264,7 @@
                             :file-list="fileList6"
                             :on-change="handleUploadChange6"
                             :auto-upload="false"
-                            :on-remove="handleRemove2"
+                            :on-remove="handleRemove1"
                     >
                         <i class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
@@ -328,7 +328,7 @@
 </template>
 
 <script>
-    import {getGoods, addGoods, updateGoods, deleteGoods, editGoods, getType} from "../util/lang";
+    import {getGoods, addGoods, updateGoods, deleteGoods, editGoods} from "../util/lang";
     import qs from 'qs'
 
     export default {
@@ -368,18 +368,18 @@
         },
         mounted() {
             setTimeout(() => {
-                this.getAllType();
+                // this.getAllType();
                 this.getList()
             }, 100)
         },
         methods: {
             // 获取分类
-            getAllType() {
-                const url = `${getType()}`;
-                this.$axios.post(url).then(res => {
-                    this.options = res.data.data.data
-                })
-            },
+            // getAllType() {
+            //     const url = `${getType()}`;
+            //     this.$axios.post(url).then(res => {
+            //         this.options = res.data.data.data
+            //     })
+            // },
             changeList(val) {
                 const url = `${getGoods()}`;
                 this.$axios.post(url, qs.stringify(
@@ -409,6 +409,10 @@
             },
             handleChangeEdit(value) {
                 this.form.orderid = value
+            },
+            handleRemove1(fileList) {
+                this.form.banner = '';
+                console.log(fileList)
             },
             handleRemove2(fileList) {
                 this.form.picurl = '';
@@ -486,6 +490,7 @@
                 const url = `${getGoods()}`;
                 this.$axios.post(url).then(res => {
                     this.tableData = res.data.data.data;
+                    this.options = res.data.type;
                     this.totalPage = res.data.data.last_page;
                     this.Currentpage = 1
                 })
