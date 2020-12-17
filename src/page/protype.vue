@@ -54,7 +54,7 @@
                         width="200">
                     <template slot-scope="scope">
                         <div class="spic" v-if="scope.row.picurl!==null">
-                            <img :src="`https://syyl.shangyu.gov.cn/${scope.row.picurl}`" alt="">
+                            <img :src="`http://tyxxc.sansg.com/${scope.row.picurl}`" alt="">
                         </div>
 
                     </template>
@@ -221,7 +221,7 @@
 
                 <el-form-item label="烈士头像" >
                     <div class="pic">
-                        <img  :src="`https://syyl.shangyu.gov.cn/${form.picurl}`" alt="" :key="index">
+                        <img  :src="`http://tyxxc.sansg.com/${form.picurl}`" alt="" :key="index">
                     </div>
                 </el-form-item>
 
@@ -446,13 +446,13 @@
         // },
         mounted(){
             setTimeout(()=>{
-                this.getType()
+                this.getType();
                 this.getList()
             },100)
         },
         methods:{
             searchVal(val){
-                const url = `${getMartyr()}`
+                const url = `${getMartyr()}`;
                 this.$axios.post(url,qs.stringify(
                     {
                         page:1,
@@ -460,8 +460,8 @@
 
                     }
                 )).then(res => {
-                    this.tableData=res.data.data.data
-                    this.totalPage=res.data.data.last_page
+                    this.tableData=res.data.data.data;
+                    this.totalPage=res.data.data.last_page;
                     this.Currentpage=1
                 })
             },
@@ -469,12 +469,12 @@
                 location.reload()
             },
             handleRemove2(fileList) {
-                this.form.picurl=''
+                this.form.picurl='';
                 console.log(fileList)
             },
             // 是否显示
             changeStatus(value,id){
-                const url = `${changeMartyr()}`
+                const url = `${changeMartyr()}`;
                 this.$axios.post(url,qs.stringify({
                     id:id,
                     checkinfo:value
@@ -489,10 +489,10 @@
             },
             // 分页
             handleCurrentChange(val) {
-                this.page=val
+                this.page=val;
                 if(val<=this.totalPage){
                     this.$nextTick(()=>{
-                        const url = `${getMartyr()}`
+                        const url = `${getMartyr()}`;
                         this.$axios.post(url,qs.stringify(
                             {
                                 page:val++
@@ -511,22 +511,22 @@
             },
             // 获取全部分类数据
             getList(){
-                const url = `${getMartyr()}`
+                const url = `${getMartyr()}`;
                 this.$axios.post(url).then(res => {
-                    this.tableData=res.data.data.data
-                    this.totalPage=res.data.data.last_page
+                    this.tableData=res.data.data.data;
+                    this.totalPage=res.data.data.last_page;
                     this.Currentpage=1
                 })
             },
             getType(){
-                const url = `${Cemetery_Tomb()}`
+                const url = `${Cemetery_Tomb()}`;
                 this.$axios.post(url).then(res => {
-                    this.lyList=res.data.cemetery
+                    this.lyList=res.data.cemetery;
                     this.lsList=res.data.tomb
                 })
             },
             addOne(){
-                this.fileList4=[]
+                this.fileList4=[];
                 this.form={
                     name:'',
                     picurl:'',
@@ -538,14 +538,14 @@
                     checkinfo:1,
                     tomb_id:[],
                     cemetery_id:[],
-                }
+                };
                 this.AddialogTableVisible=true
             },
             handleAdd(){
-                let newForm=JSON.parse(JSON.stringify(this.form))
-                 newForm.cemetery_id=JSON.stringify(newForm.cemetery_id)
-                newForm.tomb_id=JSON.stringify(newForm.tomb_id)
-                const url = `${addMartyr()}`
+                let newForm=JSON.parse(JSON.stringify(this.form));
+                 newForm.cemetery_id=JSON.stringify(newForm.cemetery_id);
+                newForm.tomb_id=JSON.stringify(newForm.tomb_id);
+                const url = `${addMartyr()}`;
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
                         this.$message({
@@ -554,22 +554,22 @@
                         });
                         this.getList()
                     }
-                })
+                });
                 this.AddialogTableVisible=false
             },
             confirmEdit(){
-                this.EditdialogTableVisible=false
-                let newForm=JSON.parse(JSON.stringify(this.form))
-                newForm.cemetery_id=JSON.stringify(newForm.cemetery_id)
-                newForm.tomb_id=JSON.stringify(newForm.tomb_id)
-                const url = `${updateMartyr()}`
+                this.EditdialogTableVisible=false;
+                let newForm=JSON.parse(JSON.stringify(this.form));
+                newForm.cemetery_id=JSON.stringify(newForm.cemetery_id);
+                newForm.tomb_id=JSON.stringify(newForm.tomb_id);
+                const url = `${updateMartyr()}`;
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
                         this.$message({
                             message: '修改成功',
                             type: 'success'
                         });
-                        const url = `${getMartyr()}`
+                        const url = `${getMartyr()}`;
                         this.$axios.post(url,qs.stringify(
                             {
                                 page:this.page
@@ -587,7 +587,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "https://syyl.shangyu.gov.cn/api/Upload";
+                    const url = "http://tyxxc.sansg.com/api/Upload";
                     this.$axios
                         .post(url, formData, {
                             headers: {
@@ -603,7 +603,7 @@
             },
             // 删除
             delete(id) {
-                const url = `${deleteMartyr(id)}`
+                const url = `${deleteMartyr(id)}`;
                 this.$axios.post(url)
                     .then(res => {
                         if (res.data.code===200) {
@@ -611,7 +611,7 @@
                                 message: '已删除',
                                 type: 'success'
                             });
-                            const url = `${getMartyr()}`
+                            const url = `${getMartyr()}`;
                             this.$axios.post(url,qs.stringify(
                                 {
                                     page:this.page
@@ -624,8 +624,8 @@
             },
             // 查看详情
             handleShow(row) {
-                this.dialogTableVisible=true
-                const url = `${editMartyr(row.id)}`
+                this.dialogTableVisible=true;
+                const url = `${editMartyr(row.id)}`;
                 this.$axios.post(url)
                     .then(res => {
                         if (res.data.code===200) {
@@ -635,10 +635,10 @@
             },
             // 编辑详情
             handleEdit(row) {
-                this.fileList4=[]
+                this.fileList4=[];
                 setTimeout(()=>{
-                    this.EditdialogTableVisible=true
-                    const url = `${editMartyr(row.id)}`
+                    this.EditdialogTableVisible=true;
+                    const url = `${editMartyr(row.id)}`;
                     this.$axios.post(url)
                         .then(res => {
                             if(res.data.data.tomb_id==null){
@@ -647,7 +647,7 @@
                                 res.data.data.cemetery_id=[]
                             }
                             if (res.data.code===200) {
-                                this.form=res.data.data
+                                this.form=res.data.data;
                                 if(this.form.picurl!==null && this.form.picurl!==""){
                                     this.fileList4.push({url:'http://syyl.shangyu.gov.cn'+this.form.picurl})
                                 }else{

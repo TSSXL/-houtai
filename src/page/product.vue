@@ -57,7 +57,7 @@
                         width="200">
                     <template slot-scope="scope">
                         <div class="spic" v-if="scope.row.picurl!==null">
-                            <img :src="`https://syyl.shangyu.gov.cn/${scope.row.picurl}`" alt="">
+                            <img :src="`http://tyxxc.sansg.com/${scope.row.picurl}`" alt="">
                         </div>
 
                     </template>
@@ -252,13 +252,13 @@
 
                 <el-form-item label="陵园banner" >
                     <div class="pic">
-                        <img  :src="`https://syyl.shangyu.gov.cn/${form.banner}`" alt="" :key="index">
+                        <img  :src="`http://tyxxc.sansg.com/${form.banner}`" alt="" :key="index">
                     </div>
                 </el-form-item>
 
                 <el-form-item label="陵园缩略图" >
                     <div class="pic">
-                        <img  :src="`https://syyl.shangyu.gov.cn/${form.picurl}`" alt="" :key="index">
+                        <img  :src="`http://tyxxc.sansg.com/${form.picurl}`" alt="" :key="index">
                     </div>
                 </el-form-item>
 
@@ -297,7 +297,7 @@
                                     <div class="oItem">
                                         <span>实景照片</span>
                                         <div class="s2">
-                                            <img :src="`https://syyl.shangyu.gov.cn/${item.spic}`" alt="">
+                                            <img :src="`http://tyxxc.sansg.com/${item.spic}`" alt="">
                                         </div>
                                     </div>
                                     <div class="oItem">
@@ -425,7 +425,7 @@
                                                     :auto-upload="false"
                                                     :on-remove="handleRemove3"
                                             >
-                                                <img v-if="item.spic!==''"  :src="`https://syyl.shangyu.gov.cn/${item.spic}`" class="avatar">
+                                                <img v-if="item.spic!==''"  :src="`http://tyxxc.sansg.com/${item.spic}`" class="avatar">
                                             </el-upload>
 <!--                                            <i class="el-icon-close" @click="handleRemove3"></i>-->
                                         </div>
@@ -541,15 +541,15 @@
         },
         methods:{
             searchVal(val){
-                const url = `${getHome()}`
+                const url = `${getHome()}`;
                 this.$axios.post(url,qs.stringify(
                     {
                         page:1,
                         title:val
                     }
                 )).then(res => {
-                    this.tableData=res.data.data.data
-                    this.totalPage=res.data.data.last_page
+                    this.tableData=res.data.data.data;
+                    this.totalPage=res.data.data.last_page;
                     this.Currentpage=1
                 })
             },
@@ -564,11 +564,11 @@
                 })
             },
             handleRemove2(fileList) {
-                this.form.picurl=''
+                this.form.picurl='';
                 console.log(fileList)
             },
             handleRemove3(fileList){
-                this.form.picarr[this.index].spic=''
+                this.form.picarr[this.index].spic='';
                 console.log(fileList)
             },
             // 对应图片上传
@@ -577,7 +577,7 @@
             },
             // 是否显示
             changeStatus(value,id){
-                const url = `${changeCemetery()}`
+                const url = `${changeCemetery()}`;
                 this.$axios.post(url,qs.stringify({
                     id:id,
                     checkinfo:value
@@ -592,10 +592,10 @@
             },
             // 分页
             handleCurrentChange(val) {
-                this.page=val
+                this.page=val;
                 if(val<=this.totalPage){
                     this.$nextTick(()=>{
-                        const url = `${getHome()}`
+                        const url = `${getHome()}`;
                         this.$axios.post(url,qs.stringify(
                             {
                                 page:val++
@@ -614,10 +614,10 @@
             },
             // 获取全部分类数据
             getList(){
-                const url = `${getHome()}`
+                const url = `${getHome()}`;
                 this.$axios.post(url).then(res => {
-                    this.tableData=res.data.data.data
-                    this.totalPage=res.data.data.last_page
+                    this.tableData=res.data.data.data;
+                    this.totalPage=res.data.data.last_page;
                     this.Currentpage=1
                 })
             },
@@ -650,8 +650,8 @@
                 })
             },
             addOne(){
-                this.fileList=[]
-                this.fileList4=[]
+                this.fileList=[];
+                this.fileList4=[];
                 this.form={
                     title:'',
                     picurl:'',
@@ -660,13 +660,13 @@
                     map:'',
                     banner:'',
                     picarr:[]
-                }
+                };
                 this.AddialogTableVisible=true
             },
             handleAdd(){
-                let newForm=JSON.parse(JSON.stringify(this.form))
-                newForm.picarr=JSON.stringify(this.form.picarr)
-                const url = `${addCemetery()}`
+                let newForm=JSON.parse(JSON.stringify(this.form));
+                newForm.picarr=JSON.stringify(this.form.picarr);
+                const url = `${addCemetery()}`;
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
                         this.$message({
@@ -675,21 +675,21 @@
                         });
                         this.getList()
                     }
-                })
+                });
                 this.AddialogTableVisible=false
             },
             confirmEdit(){
-               this.EditdialogTableVisible=false
-                let newForm=JSON.parse(JSON.stringify(this.form))
-                newForm.picarr=JSON.stringify(this.form.picarr)
-                const url = `${updateCemetery()}`
+               this.EditdialogTableVisible=false;
+                let newForm=JSON.parse(JSON.stringify(this.form));
+                newForm.picarr=JSON.stringify(this.form.picarr);
+                const url = `${updateCemetery()}`;
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
                         this.$message({
                             message: '修改成功',
                             type: 'success'
                         });
-                        const url = `${getHome()}`
+                        const url = `${getHome()}`;
                         this.$axios.post(url,qs.stringify(
                             {
                                 page:this.page
@@ -708,7 +708,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "https://syyl.shangyu.gov.cn/api/Upload";
+                    const url = "http://tyxxc.sansg.com/api/Upload";
                     this.$axios
                         .post(url, formData, {
                             headers: {
@@ -717,7 +717,7 @@
                         })
                         .then(res => {
                             if (res.data.code === 200) {
-                                   this.isUpload=false
+                                   this.isUpload=false;
                                 this.form.picarr[this.index].spic=res.data.path
                             }
                         });
@@ -730,7 +730,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "https://syyl.shangyu.gov.cn/api/Upload";
+                    const url = "http://tyxxc.sansg.com/api/Upload";
                     this.$axios
                         .post(url, formData, {
                             headers: {
@@ -751,7 +751,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "https://syyl.shangyu.gov.cn/api/Upload";
+                    const url = "http://tyxxc.sansg.com/api/Upload";
                     this.$axios
                         .post(url, formData, {
                             headers: {
@@ -767,7 +767,7 @@
             },
             // 删除
             delete(id) {
-                const url = `${deleteCemetery(id)}`
+                const url = `${deleteCemetery(id)}`;
                 this.$axios.post(url)
                     .then(res => {
                         if (res.data.code===200) {
@@ -775,7 +775,7 @@
                                 message: '已删除',
                                 type: 'success'
                             });
-                            const url = `${getHome()}`
+                            const url = `${getHome()}`;
                             this.$axios.post(url,qs.stringify(
                                 {
                                     page:this.page
@@ -788,13 +788,13 @@
             },
             // 查看详情
             handleShow(row) {
-                this.fileList=[]
-                this.dialogTableVisible=true
-                const url = `${editCemetery(row.id)}`
+                this.fileList=[];
+                this.dialogTableVisible=true;
+                const url = `${editCemetery(row.id)}`;
                 this.$axios.post(url)
                     .then(res => {
                         if (res.data.code===200) {
-                            this.form=res.data.data
+                            this.form=res.data.data;
                             this.form.picarr.map((item)=>{
                                 this.fileList.push({url:'https://cn-flt.com'+item})
                             })
@@ -803,20 +803,20 @@
             },
             // 编辑详情
             handleEdit(row) {
-                this.fileList3=[]
-                this.fileList4=[]
-                this.fileList2=[]
-                this.fileList6=[]
+                this.fileList3=[];
+                this.fileList4=[];
+                this.fileList2=[];
+                this.fileList6=[];
                 setTimeout(()=>{
-                    this.EditdialogTableVisible=true
-                    const url = `${editCemetery(row.id)}`
+                    this.EditdialogTableVisible=true;
+                    const url = `${editCemetery(row.id)}`;
                     this.$axios.post(url)
                         .then(res => {
                             if (res.data.code===200) {
-                                this.form=res.data.data
+                                this.form=res.data.data;
                                 this.form.picarr.map((item)=>{
                                     this.fileList3.push({url:'http://syyl.shangyu.gov.cn'+item})
-                                })
+                                });
 
                                 if(this.form.picurl!==null && this.form.picurl!==""){
                                     this.fileList4.push({url:'http://syyl.shangyu.gov.cn'+this.form.picurl})

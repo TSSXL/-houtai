@@ -6,17 +6,16 @@ import Login from '@/page/login'
 import Index from '../page/index.vue'
 import Home from '../page/home.vue'
 import User from '../page/user.vue'
-import Protype from '../page/protype.vue'
-import Product from '../page/product.vue'
 import Order from '../page/order.vue'
 import Lsdots from '../page/lsDots.vue'
 import Message from '../page/message.vue'
 import People from '../page/people.vue'
 import Books from '../page/books.vue'
 import Himg from '../page/hImg.vue'
+import Lsm from '../page/lsm.vue'
 
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [{
         path: '/login',
@@ -32,13 +31,6 @@ const routes = [{
             {
                 path: '/user',
                 component: User
-            },
-            {
-                path: '/protype',
-                component: Protype
-            },{
-                path: '/product',
-                component: Product
             },
             {
                 path: '/order',
@@ -63,6 +55,10 @@ const routes = [{
             {
                 path: '/hImg',
                 component: Himg
+            },
+            {
+                path: '/lsm',
+                component: Lsm
             }
         ]
     },
@@ -70,15 +66,15 @@ const routes = [{
         path: '/',
         redirect: '/login'
     },
-]
+];
 
 const router = new VueRouter({
     routes
-})
-const originalPush = VueRouter.prototype.push
+});
+const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err)
-}
+};
 
 // router.beforeEach((to, from, next) => {
 //     if (to.path === '/login' || to.path === '/login-phone') return next()

@@ -4,25 +4,14 @@
             <div class="left">
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>公告</el-breadcrumb-item>
+                    <el-breadcrumb-item>展品分类</el-breadcrumb-item>
                 </el-breadcrumb>
-                <span class="them">公告</span>
+                <span class="them">展品分类</span>
             </div>
         </div>
         <div class="form">
             <div class="add">
-                <el-button type="primary" @click="addOne">添加公告</el-button>
-                <!--                <div class="chose">-->
-                <!--                    <el-select v-model="value" placeholder="请选择产品分类">-->
-                <!--                        <el-option-->
-                <!--                                v-for="item in options"-->
-                <!--                                :key="item.value"-->
-                <!--                                :label="item.label"-->
-                <!--                                :value="item.value">-->
-                <!--                        </el-option>-->
-                <!--                    </el-select>-->
-
-                <!--                </div>-->
+                <el-button type="primary" @click="addOne">添加分类</el-button>
                 <div class="refresh" @click="shuaxin">
                     <i class="el-icon-refresh-right"></i>
                 </div>
@@ -36,41 +25,24 @@
                         prop="id"
                         label="ID"
                         align="center"
-                        width="120">
+                >
                 </el-table-column>
                 <el-table-column
                         prop="title"
-                        label="公告标题"
+                        label="标题"
                         align="center"
-                        width="200">
+                >
                 </el-table-column>
                 <el-table-column
-                        prop="content"
-                        label="公告内容"
+                        prop="picurl"
+                        label="缩略图"
                         align="center"
-                        width="200">
-                </el-table-column>
-                <el-table-column
-                        prop="created_at"
-                        label="发布时间"
-                        align="center"
-                        width="200">
-                </el-table-column>
-                <el-table-column
-                        prop="checkinfo"
-                        label="是否显示"
-                        align="center"
-                        width="150">
+                        width="300">
                     <template slot-scope="scope">
-                        <el-switch
-                                v-model="scope.row.checkinfo"
-                                active-color="#409EFF"
-                                inactive-color="#dcdfe6"
-                                :active-value="activeNum"
-                                :inactive-value="InactiveNum"
-                                @change="((value)=>{changeStatus(value, scope.row.id)})"
-                        >
-                        </el-switch>
+                        <div class="spic" v-if="scope.row.picurl!==null">
+                            <img :src="`http://tyxxc.sansg.com/${scope.row.picurl}`" alt="" style="width:200px;height:60px;object-fit: contain">
+                        </div>
+
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -105,36 +77,27 @@
 
 
         <!--      添加-->
-        <el-dialog title="添加公告" :visible.sync="AddialogTableVisible" >
+        <el-dialog title="添加分类" :visible.sync="AddialogTableVisible" >
             <el-form :model="form"   label-width="100px">
-                <el-form-item label="公告标题" >
-                    <el-input  v-model="form.title" autocomplete="off" placeholder="请输入公告标题" ></el-input>
-                </el-form-item>
-
-                <el-form-item label="公告内容" >
-                    <el-input  v-model="form.content"   autocomplete="off" placeholder="请输入公告内容" ></el-input>
+                <el-form-item label="标题" >
+                    <el-input  v-model="form.title" autocomplete="off" placeholder="请输入标题" ></el-input>
                 </el-form-item>
 
 
-                <el-form-item label="发布时间" >
-                    <el-date-picker
-                            v-model="form.created_at"
-                            type="datetime"
-                            value-format="yyyy-MM-dd HH:mm:ss"
-                            placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item>
-
-                <el-form-item label="是否显示" >
-                    <el-switch
-                            v-model="form.checkinfo"
-                            active-color="#409EFF"
-                            inactive-color="#dcdfe6"
-                            :active-value="activeNum"
-                            :inactive-value="InactiveNum"
+                <el-form-item label="缩略图" >
+                    <el-upload
+                            class="avatar-uploader"
+                            action="#"
+                            :limit="1"
+                            list-type="picture-card"
+                            :file-list="fileList"
+                            :on-change="handleUploadChange"
+                            :auto-upload="false"
                     >
-                    </el-switch>
+                        <i class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
                 </el-form-item>
+
 
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -143,78 +106,57 @@
             </div>
         </el-dialog>
 
-        <!--       查看图片-->
-        <el-dialog title="公告详情" :visible.sync="dialogTableVisible" >
+
+        <!--      查看-->
+        <el-dialog title="分类详情" :visible.sync="dialogTableVisible" >
             <el-form :model="form"   label-width="100px">
-                <el-form-item label="公告标题" >
-                    <el-input  v-model="form.title" autocomplete="off" placeholder="公告标题" :readonly="readonly"></el-input>
-                </el-form-item>
-
-
-                <el-form-item label="公告内容" >
-                    <el-input  v-model="form.content"   autocomplete="off" placeholder="公告内容"  :readonly="readonly"></el-input>
+                <el-form-item label="标题" >
+                    <el-input  v-model="form.title" autocomplete="off" placeholder="请输入标题" :readonly="readonly"></el-input>
                 </el-form-item>
 
 
 
-                <el-form-item label="发布时间" >
-                    <el-date-picker
-                            v-model="form.created_at"
-                            type="datetime"
-                            disabled
-                            value-format="yyyy-MM-dd HH:mm:ss"
-                            placeholder="选择日期">
-                    </el-date-picker>
+                <el-form-item label="缩略图" >
+                    <div class="pic">
+                        <img  :src="`http://tyxxc.sansg.com/${form.picurl}`" alt="" :key="index">
+                    </div>
                 </el-form-item>
 
 
-                <el-form-item label="是否显示" >
-                    <el-switch
-                            v-model="form.checkinfo"
-                            active-color="#409EFF"
-                            inactive-color="#dcdfe6"
-                            :active-value="activeNum"
-                            :inactive-value="InactiveNum"
-                            disabled
-                    >
-                    </el-switch>
-                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogTableVisible=false">取 消</el-button>
-                <el-button type="primary" @click="dialogTableVisible=false">确 定</el-button>
+                <el-button @click="AddialogTableVisible=false">取 消</el-button>
+                <el-button type="primary" @click="handleAdd">确 定</el-button>
             </div>
         </el-dialog>
 
+
         <!--      编辑图片详情-->
-        <el-dialog title="编辑公告" :visible.sync="EditdialogTableVisible" >
+        <el-dialog title="编辑分类" :visible.sync="EditdialogTableVisible" >
             <el-form :model="form"   label-width="100px">
-                <el-form-item label="公告标题" >
-                    <el-input  v-model="form.title" autocomplete="off" placeholder="请输入公告标题" ></el-input>
+                <el-form-item label="标题" >
+                    <el-input  v-model="form.title" autocomplete="off" placeholder="请输入标题" ></el-input>
                 </el-form-item>
 
-                <el-form-item label="公告内容" >
-                    <el-input  v-model="form.content"   autocomplete="off" placeholder="请输入公告内容" ></el-input>
+
+
+                <el-form-item label="缩略图" >
+                    <el-upload
+                            class="avatar-uploader"
+                            action="#"
+                            :limit="1"
+                            list-type="picture-card"
+                            :file-list="fileList"
+                            :on-change="handleUploadChange"
+                            :auto-upload="false"
+                            :on-remove="handleRemove2"
+                    >
+                        <i class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
                 </el-form-item>
 
-                <el-form-item label="发布时间" >
-                    <el-date-picker
-                            v-model="form.created_at"
-                            type="datetime"
-                            value-format="yyyy-MM-dd HH:mm:ss"
-                            placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item>
 
-                <el-form-item label="是否显示" >
-                    <el-switch
-                            v-model="form.checkinfo"
-                            active-color="#409EFF"
-                            inactive-color="#dcdfe6"
-                            :active-value="activeNum"
-                            :inactive-value="InactiveNum">
-                    </el-switch>
-                </el-form-item>
+
 
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -229,12 +171,24 @@
 </template>
 
 <script>
-    import  {getNotice,editNotice,changeNotice,deleteNotice,addNotice,updateNotice} from "../util/lang";
+    import  {getType,editType,deleteType,addType,updateType} from "../util/lang";
     import  qs from 'qs'
     export default {
         name: "user",
         data(){
             return{
+                options:[
+                    {
+                        label:'弹窗',
+                        value:1
+                    },
+                    {
+                        label:'banner',
+                        value:2
+                    }
+                ],
+                fileList: [],
+                fileList2:[],
                 isUpload:true,
                 activeNum:1,
                 index:0,
@@ -253,50 +207,55 @@
                     title:'',
                     content:'',
                     created_at:'',
-                    checkinfo:1
+                    checkinfo:1,
+                    type:1
                 }
             }
         },
-        // filters:{
-        //     dataFormat(n) {
-        //         if(n=='a'){
-        //             return '产品分类一'
-        //         }else if(n=='b'){
-        //             return '产品分类二'
-        //         }else{
-        //             return '产品分类三'
-        //         }
-        //     }
-        // },
+        filters:{
+            filterText(n) {
+                if(n==1){
+                    return '弹窗'
+                }else if(n==2){
+                    return 'banner'
+                }
+            }
+        },
         mounted(){
             setTimeout(()=>{
                 this.getList()
             },100)
         },
         methods:{
+            handleUploadChange(file) {
+                const isLt2M = file.size / 1024 / 1024 < 2;
+                if (!isLt2M) {
+                    this.$message.error("上传的图片大小不能超过2M！");
+                } else {
+                    const formData = new FormData(); // 声明一个FormData对象
+                    formData.append("file", file.raw);
+                    const url = "http://tyxxc.sansg.com/api/Upload";
+                    this.$axios
+                        .post(url, formData, {
+                            headers: {
+                                "content-type": "multer/form-data"
+                            }
+                        })
+                        .then(res => {
+                            if (res.data.code === 200) {
+                                this.form.picurl=res.data.path
+                            }
+                        });
+                }
+            },
             shuaxin(){
                 location.reload()
-            },
-            // 是否显示
-            changeStatus(value,id){
-                const url = `${changeNotice()}`
-                this.$axios.post(url,qs.stringify({
-                    id:id,
-                    checkinfo:value
-                })).then(res => {
-                    if (res.data.code===200) {
-                        this.$message({
-                            message: '修改成功',
-                            type: 'success'
-                        });
-                    }
-                })
             },
             // 分页
             handleCurrentChange(val) {
                 if(val<=this.totalPage){
                     this.$nextTick(()=>{
-                        const url = `${getNotice()}`
+                        const url = `${getType()}`;
                         this.$axios.post(url,qs.stringify(
                             {
                                 page:val++
@@ -315,25 +274,24 @@
             },
             // 获取全部分类数据
             getList(){
-                const url = `${getNotice()}`
+                const url = `${getType()}`;
                 this.$axios.post(url).then(res => {
-                    this.tableData=res.data.data.data
-                    this.totalPage=res.data.data.last_page
+                    this.tableData=res.data.data.data;
+                    this.totalPage=res.data.data.last_page;
                     this.Currentpage=1
                 })
             },
             addOne(){
+                this.fileList=[];
                 this.form={
                     title:'',
-                    content:'',
-                    created_at:'',
-                    checkinfo:1
-                }
+                    picurl:''
+                };
                 this.AddialogTableVisible=true
             },
             handleAdd(){
-                let newForm=JSON.parse(JSON.stringify(this.form))
-                const url = `${addNotice()}`
+                let newForm=JSON.parse(JSON.stringify(this.form));
+                const url = `${addType()}`;
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
                         this.$message({
@@ -342,13 +300,13 @@
                         });
                         this.getList()
                     }
-                })
+                });
                 this.AddialogTableVisible=false
             },
             confirmEdit(){
-                this.EditdialogTableVisible=false
-                let newForm=JSON.parse(JSON.stringify(this.form))
-                const url = `${updateNotice()}`
+                this.EditdialogTableVisible=false;
+                let newForm=JSON.parse(JSON.stringify(this.form));
+                const url = `${updateType()}`;
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
                         this.$message({
@@ -361,7 +319,7 @@
             },
             // 删除
             delete(id) {
-                const url = `${deleteNotice(id)}`
+                const url = `${deleteType(id)}`;
                 this.$axios.post(url)
                     .then(res => {
                         if (res.data.code===200) {
@@ -375,8 +333,8 @@
             },
             // 查看详情
             handleShow(row) {
-                this.dialogTableVisible=true
-                const url = `${editNotice(row.id)}`
+                this.dialogTableVisible=true;
+                const url = `${editType(row.id)}`;
                 this.$axios.post(url)
                     .then(res => {
                         if (res.data.code===200) {
@@ -386,16 +344,28 @@
             },
             // 编辑详情
             handleEdit(row) {
+                this.fileList=[];
                 setTimeout(()=>{
-                    this.EditdialogTableVisible=true
-                    const url = `${editNotice(row.id)}`
+                    this.EditdialogTableVisible=true;
+                    const url = `${editType(row.id)}`;
                     this.$axios.post(url)
                         .then(res => {
                             if (res.data.code===200) {
-                                this.form=res.data.data
+
+                                this.form=res.data.data;
+
+                                if(this.form.picurl!==null && this.form.picurl!==""){
+                                    this.fileList.push({url:'http://tyxxc.sansg.com'+this.form.picurl})
+                                }else{
+                                    this.fileList=[]
+                                }
                             }
                         });
                 },600)
+            },
+            handleRemove2(fileList) {
+                this.form.picurl='';
+                console.log(fileList)
             },
             // 删除该产品
             handleDelete(row) {

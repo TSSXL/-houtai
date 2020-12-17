@@ -25,6 +25,17 @@ body,html,#app{
   font-family: Source Sans Pro,Arial,sans-serif;
   -webkit-font-smoothing: antialiased;
 }
+  .el-main::-webkit-scrollbar{
+    width:1px;
+  }
+  .el-main::-webkit-scrollbar-track{
+    background: rgb(239, 239, 239);
+    border-radius:2px;
+  }
+  .el-main::-webkit-scrollbar-thumb{
+    background: #bfbfbf;
+    border-radius:10px;
+  }
   .el-form-item__content{
     width:100%;
     margin-left: 0 !important;

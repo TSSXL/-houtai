@@ -4,7 +4,7 @@
     <el-aside :width="isCollapse ? '65px' : '200px'">
       <el-container>
         <el-header class="logo" :class="{hide_logo:isCollapse}">
-          <img class="logo_img" :class="{hide_logo_img:isCollapse}" src="../assets/logo.png" alt />
+          <img class="logo_img" :class="{hide_logo_img:isCollapse}" src="../assets/logo.jpg" alt />
         </el-header>
         <el-main :class="{aside_main:isCollapse}">
           <el-menu
@@ -61,7 +61,7 @@
                 ></el-option>
               </el-select>-->
               <i class="iconfont iconxiaoxi" @click="gotoNotice"></i>
-              <img class="user_img" :src="`${mInfo.picurl}`" alt />
+              <img class="user_img" src="../assets/logo.jpg" alt />
               <div class="time_address">
                 <span>{{mInfo.title}}</span>
                 <span>{{mInfo.exhibition_hall}}-{{mInfo.seat_number}}</span>
@@ -131,25 +131,21 @@ export default {
           path: "user",
         },
         {
-          name: "烈士陵园",
-          path: "product",
-        },
-        {
-          name: "烈士",
-          path: "protype",
-        },
-        {
-          name: "烈士墓",
-          path: "lsdots",
-        },
-        {
-          name: "公告",
+          name: "展品分类",
           path: "books",
         },
         {
-          name: "留言",
-          path: "message",
-        }
+          name: "展品",
+          path: "lsdots",
+        },
+        {
+          name: "科普知识",
+          path: "lsm",
+        },
+        // {
+        //   name: "留言",
+        //   path: "message",
+        // }
       ]
     };
   },
@@ -279,7 +275,6 @@ export default {
   border-radius: 50%;
   height: 50px;
   width: 50px;
-  border: 1px solid #108ee9;
 }
 .time_address {
   display: flex;

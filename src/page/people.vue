@@ -54,7 +54,7 @@
                         width="200">
                     <template slot-scope="scope">
                         <div class="spic" v-if="scope.row.picurl!==null">
-                            <img :src="`https://syyl.shangyu.gov.cn/${scope.row.picurl}`" alt="">
+                            <img :src="`http://tyxxc.sansg.com/${scope.row.picurl}`" alt="">
                         </div>
 
                     </template>
@@ -72,7 +72,7 @@
                        >
                     <template slot-scope="scope">
                         <div class="spic" v-if="scope.row.picurl!==null">
-                            <img :src="`https://syyl.shangyu.gov.cn/${scope.row.picurl}`" alt="">
+                            <img :src="`http://tyxxc.sansg.com/${scope.row.picurl}`" alt="">
                         </div>
 
                     </template>
@@ -227,16 +227,16 @@
             },
             // 查看详情
             handleShow(n,id) {
-                this.dialogTableVisible=true
-                const url = `${getOrderInfo(id)}`
+                this.dialogTableVisible=true;
+                const url = `${getOrderInfo(id)}`;
                 this.$axios.post(url)
                     .then(res => {
-                        this.form=res.data.data
+                        this.form=res.data.data;
                             console.log(res.data.data)
                     });
             },
             confirmSearch2(){
-                const url = `${getOrder()}`
+                const url = `${getOrder()}`;
                 this.$axios.post(url,qs.stringify(
                     {
                         status:this.value,
@@ -245,18 +245,18 @@
                         total_b: this.total_b
                     }
                 )).then(res => {
-                    this.tableData=res.data.data.data
-                    this.totalPage=res.data.data.last_page
+                    this.tableData=res.data.data.data;
+                    this.totalPage=res.data.data.last_page;
                     this.Currentpage=1
                     // this.value=''
                 })
             },
             handleEdit(n,id){
-                this.EditdialogTableVisible=true
-                const url = `${getOrderInfo(id)}`
+                this.EditdialogTableVisible=true;
+                const url = `${getOrderInfo(id)}`;
                 this.$axios.post(url)
                     .then(res => {
-                        this.form=res.data.data
+                        this.form=res.data.data;
                         this.status=this.form.status
                     });
             },
@@ -286,11 +286,11 @@
             },
             // 获取全部分类数据
             getList(){
-                const url = `${getOrder()}`
+                const url = `${getOrder()}`;
                 this.$axios.post(url).then(res => {
-                    this.tableData=res.data.data.data
-                    this.totalPage=res.data.data.last_page
-                    this.Currentpage=1
+                    this.tableData=res.data.data.data;
+                    this.totalPage=res.data.data.last_page;
+                    this.Currentpage=1;
                     this.value=''
                 })
             },
@@ -300,16 +300,16 @@
                     id:'',
                     status:'',
                     remarks:''
-                }
-                form.id=this.form.id
-                form.remarks=this.form.remarks
-                form.status=this.status
-                this.EditdialogTableVisible=false
-                const url = `${editDing()}`
+                };
+                form.id=this.form.id;
+                form.remarks=this.form.remarks;
+                form.status=this.status;
+                this.EditdialogTableVisible=false;
+                const url = `${editDing()}`;
                 this.$axios.post(url,qs.stringify(form))
                     .then(res => {
                         if (res.data.code===200) {
-                            location.reload()
+                            location.reload();
                             this.$message({
                                 message: '修改成功',
                                 type: 'success'
@@ -320,7 +320,7 @@
             handleCurrentChange(val) {
                 if(val<=this.totalPage){
                     this.$nextTick(()=>{
-                        const url = `${getOrder()}`
+                        const url = `${getOrder()}`;
                         this.$axios.post(url,qs.stringify(
                             {
                                 page:val++,

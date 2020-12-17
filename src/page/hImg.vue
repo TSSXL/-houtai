@@ -11,18 +11,7 @@
         </div>
         <div class="form">
                         <div class="add">
-                            <el-button type="primary" @click="addOne">添加图片</el-button>
-                                            <div class="chose">
-                                                <el-select v-model="value" placeholder="请选择类别" @change="searchVal">
-                                                    <el-option
-                                                            v-for="item in options"
-                                                            :key="item.value"
-                                                            :label="item.label"
-                                                            :value="item.value">
-                                                    </el-option>
-                                                </el-select>
-
-                                            </div>
+                            <el-button type="primary" @click="addOne">添加内容</el-button>
                             <div class="refresh" @click="shuaxin">
                                 <i class="el-icon-refresh-right"></i>
                             </div>
@@ -51,18 +40,9 @@
                         width="300">
                     <template slot-scope="scope">
                         <div class="spic" v-if="scope.row.picurl!==null">
-                            <img :src="`https://syyl.shangyu.gov.cn/${scope.row.picurl}`" alt="" style="border-radius: 50%;width:80px;height:80px;">
+                            <img :src="`http://tyxxc.sansg.com/${scope.row.picurl}`" alt="" style="width:200px;height:60px;object-fit: contain">
                         </div>
 
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        prop="type"
-                        label="类型"
-                        align="center"
-                >
-                    <template slot-scope="scope">
-                        <p>{{scope.row.type | filterText}}</p>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -103,16 +83,6 @@
                     <el-input  v-model="form.title" autocomplete="off" placeholder="请输入标题" ></el-input>
                 </el-form-item>
 
-                <el-form-item label="类别" >
-                                        <el-select v-model="form.type" placeholder="请选择类别">
-                                            <el-option
-                                                    v-for="item in options"
-                                                    :key="item.value"
-                                                    :label="item.label"
-                                                    :value="item.value">
-                                            </el-option>
-                                        </el-select>
-                </el-form-item>
 
                 <el-form-item label="缩略图" >
                     <el-upload
@@ -137,28 +107,18 @@
         </el-dialog>
 
 
-        <!--      添加-->
+        <!--      查看-->
         <el-dialog title="内容详情" :visible.sync="dialogTableVisible" >
             <el-form :model="form"   label-width="100px">
                 <el-form-item label="标题" >
                     <el-input  v-model="form.title" autocomplete="off" placeholder="请输入标题" :readonly="readonly"></el-input>
                 </el-form-item>
 
-                <el-form-item label="类别" >
-                    <el-select v-model="form.type" placeholder="请选择类别">
-                        <el-option disabled
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
 
 
                 <el-form-item label="缩略图" >
                     <div class="pic">
-                        <img  :src="`https://syyl.shangyu.gov.cn/${form.picurl}`" alt="" :key="index">
+                        <img  :src="`http://tyxxc.sansg.com/${form.picurl}`" alt="" :key="index">
                     </div>
                 </el-form-item>
 
@@ -178,16 +138,6 @@
                             <el-input  v-model="form.title" autocomplete="off" placeholder="请输入标题" ></el-input>
                         </el-form-item>
 
-                        <el-form-item label="类别" >
-                            <el-select v-model="form.type" placeholder="请选择类别">
-                                <el-option
-                                        v-for="item in options"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
 
 
                         <el-form-item label="缩略图" >
@@ -199,6 +149,7 @@
                                     :file-list="fileList"
                                     :on-change="handleUploadChange"
                                     :auto-upload="false"
+                                    :on-remove="handleRemove2"
                             >
                                 <i class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>
@@ -283,7 +234,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "https://syyl.shangyu.gov.cn/api/Upload";
+                    const url = "http://tyxxc.sansg.com/api/Upload";
                     this.$axios
                         .post(url, formData, {
                             headers: {
@@ -304,7 +255,7 @@
             handleCurrentChange(val) {
                 if(val<=this.totalPage){
                     this.$nextTick(()=>{
-                        const url = `${getContent()}`
+                        const url = `${getContent()}`;
                         this.$axios.post(url,qs.stringify(
                             {
                                 page:val++
@@ -323,38 +274,38 @@
             },
             // 获取全部分类数据
             getList(){
-                const url = `${getContent()}`
+                const url = `${getContent()}`;
                 this.$axios.post(url).then(res => {
-                    this.tableData=res.data.data.data
-                    this.totalPage=res.data.data.last_page
+                    this.tableData=res.data.data.data;
+                    this.totalPage=res.data.data.last_page;
                     this.Currentpage=1
                 })
             },
             searchVal(val){
-                const url = `${getContent()}`
+                const url = `${getContent()}`;
                 this.$axios.post(url,qs.stringify(
                     {
                         page:1,
                         type:val
                     }
                 )).then(res => {
-                    this.tableData=res.data.data.data
-                    this.totalPage=res.data.data.last_page
+                    this.tableData=res.data.data.data;
+                    this.totalPage=res.data.data.last_page;
                     this.Currentpage=1
                 })
             },
             addOne(){
-                this.fileList=[]
+                this.fileList=[];
                 this.form={
                     title:'',
                      picurl:'',
                     type:1
-                }
+                };
                 this.AddialogTableVisible=true
             },
             handleAdd(){
-                let newForm=JSON.parse(JSON.stringify(this.form))
-                const url = `${addContent()}`
+                let newForm=JSON.parse(JSON.stringify(this.form));
+                const url = `${addContent()}`;
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
                         this.$message({
@@ -363,13 +314,13 @@
                         });
                         this.getList()
                     }
-                })
+                });
                 this.AddialogTableVisible=false
             },
             confirmEdit(){
-                this.EditdialogTableVisible=false
-                let newForm=JSON.parse(JSON.stringify(this.form))
-                const url = `${updateContent()}`
+                this.EditdialogTableVisible=false;
+                let newForm=JSON.parse(JSON.stringify(this.form));
+                const url = `${updateContent()}`;
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
                         this.$message({
@@ -382,7 +333,7 @@
             },
             // 删除
             delete(id) {
-                const url = `${deleteContent(id)}`
+                const url = `${deleteContent(id)}`;
                 this.$axios.post(url)
                     .then(res => {
                         if (res.data.code===200) {
@@ -396,8 +347,8 @@
             },
             // 查看详情
             handleShow(row) {
-                this.dialogTableVisible=true
-                const url = `${editContent(row.id)}`
+                this.dialogTableVisible=true;
+                const url = `${editContent(row.id)}`;
                 this.$axios.post(url)
                     .then(res => {
                         if (res.data.code===200) {
@@ -407,23 +358,28 @@
             },
             // 编辑详情
             handleEdit(row) {
-                this.fileList=[]
+                this.fileList=[];
                 setTimeout(()=>{
-                    this.EditdialogTableVisible=true
-                    const url = `${editContent(row.id)}`
+                    this.EditdialogTableVisible=true;
+                    const url = `${editContent(row.id)}`;
                     this.$axios.post(url)
                         .then(res => {
                             if (res.data.code===200) {
-                                this.form=res.data.data
+
+                                this.form=res.data.data;
 
                                 if(this.form.picurl!==null && this.form.picurl!==""){
-                                    this.fileList.push({url:'http://syyl.shangyu.gov.cn'+this.form.picurl})
+                                    this.fileList.push({url:'http://tyxxc.sansg.com'+this.form.picurl})
                                 }else{
                                     this.fileList=[]
                                 }
                             }
                         });
                 },600)
+            },
+            handleRemove2(fileList) {
+                this.form.picurl='';
+                console.log(fileList)
             },
             // 删除该产品
             handleDelete(row) {
