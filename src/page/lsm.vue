@@ -207,7 +207,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "http://tyxxc.sansg.com/api/Upload";
+                    const url = "https://tyxxc.sansg.com/api/Upload";
                     this.$axios
                         .post(url, formData, {
                             headers: {

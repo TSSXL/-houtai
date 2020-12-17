@@ -54,7 +54,7 @@
                         width="200">
                     <template slot-scope="scope">
                         <div class="spic" v-if="scope.row.picurl!==null">
-                            <img :src="`http://tyxxc.sansg.com/${scope.row.picurl}`" alt="">
+                            <img :src="`https://tyxxc.sansg.com/${scope.row.picurl}`" alt="">
                         </div>
 
                     </template>
@@ -72,7 +72,7 @@
                        >
                     <template slot-scope="scope">
                         <div class="spic" v-if="scope.row.picurl!==null">
-                            <img :src="`http://tyxxc.sansg.com/${scope.row.picurl}`" alt="">
+                            <img :src="`https://tyxxc.sansg.com/${scope.row.picurl}`" alt="">
                         </div>
 
                     </template>

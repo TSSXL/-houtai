@@ -204,13 +204,13 @@ export default {
     handleImgUpload(blobInfo, success, failure) {
       const formdata = new FormData();
       formdata.append('file', blobInfo.blob());
-      this.$axios.post('http://tyxxc.sansg.com/api/Upload', formdata, {
+      this.$axios.post('https://tyxxc.sansg.com/api/Upload', formdata, {
         headers: {
           'content-type': 'multer/form-data'
         }
       }).then(res => {
         // console.log(res)
-        success('http://tyxxc.sansg.com/' + res.data.path)
+        success('https://tyxxc.sansg.com/' + res.data.path)
       }).catch(res => {
         // console.log(res)
         failure(res)

@@ -54,7 +54,7 @@
                         width="200">
                     <template slot-scope="scope">
                         <div class="spic" v-if="scope.row.picurl!==null">
-                            <img :src="`http://tyxxc.sansg.com/${scope.row.picurl}`" alt="">
+                            <img :src="`https://tyxxc.sansg.com/${scope.row.picurl}`" alt="">
                         </div>
 
                     </template>
@@ -221,7 +221,7 @@
 
                 <el-form-item label="烈士头像" >
                     <div class="pic">
-                        <img  :src="`http://tyxxc.sansg.com/${form.picurl}`" alt="" :key="index">
+                        <img  :src="`https://tyxxc.sansg.com/${form.picurl}`" alt="" :key="index">
                     </div>
                 </el-form-item>
 
@@ -587,7 +587,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "http://tyxxc.sansg.com/api/Upload";
+                    const url = "https://tyxxc.sansg.com/api/Upload";
                     this.$axios
                         .post(url, formData, {
                             headers: {
