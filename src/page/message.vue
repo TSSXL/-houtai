@@ -4,28 +4,28 @@
             <div class="left">
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>留言</el-breadcrumb-item>
+                    <el-breadcrumb-item>评论</el-breadcrumb-item>
                 </el-breadcrumb>
-                <span class="them">留言</span>
+                <span class="them">评论</span>
             </div>
         </div>
         <div class="form">
 
             <div class="add">
 
-                <div class="search" style="margin-left: 20px;display: flex;flex-direction: row;">
-                    <el-input v-model="message" placeholder="请输入要搜索的内容" @change="searchVal" style="width:30%;"></el-input>
-                    <el-input v-model="nickname" placeholder="请输入要搜索的姓名" @change="searchVal" style="margin-left: 30px;width:30%;"></el-input>
-                                        <el-select v-model="checkinfo" placeholder="请选择是否显示" @change="searchVal2" style="margin-left: 30px;width:30%;">
-                                            <el-option
-                                                    v-for="item in showList"
-                                                    :key="item.value"
-                                                    :label="item.label"
-                                                    :value="item.value">
-                                            </el-option>
-                                        </el-select>
-                </div>
-<!--                <el-button type="primary" @click="addOne">添加公告</el-button>-->
+<!--                <div class="search" style="margin-left: 20px;display: flex;flex-direction: row;">-->
+<!--                    <el-input v-model="message" placeholder="请输入要搜索的内容" @change="searchVal" style="width:30%;"></el-input>-->
+<!--                    <el-input v-model="nickname" placeholder="请输入要搜索的姓名" @change="searchVal" style="margin-left: 30px;width:30%;"></el-input>-->
+<!--                    <el-select v-model="checkinfo" placeholder="请选择是否显示" @change="searchVal2" style="margin-left: 30px;width:30%;">-->
+<!--                        <el-option-->
+<!--                                v-for="item in showList"-->
+<!--                                :key="item.value"-->
+<!--                                :label="item.label"-->
+<!--                                :value="item.value">-->
+<!--                        </el-option>-->
+<!--                    </el-select>-->
+<!--                </div>-->
+                <!--                <el-button type="primary" @click="addOne">添加公告</el-button>-->
                 <!--                <div class="chose">-->
                 <!--                    <el-select v-model="value" placeholder="请选择产品分类">-->
                 <!--                        <el-option-->
@@ -37,9 +37,9 @@
                 <!--                    </el-select>-->
 
                 <!--                </div>-->
-<!--                <div class="refresh" @click="shuaxin">-->
-<!--                    <i class="el-icon-refresh-right"></i>-->
-<!--                </div>-->
+                <!--                <div class="refresh" @click="shuaxin">-->
+                <!--                    <i class="el-icon-refresh-right"></i>-->
+                <!--                </div>-->
 
             </div>
             <el-table
@@ -50,48 +50,30 @@
                         prop="id"
                         label="ID"
                         align="center"
-                        >
+                >
                 </el-table-column>
                 <el-table-column
-                        prop="nickname"
-                        label="留言人"
+                        prop="content"
+                        label="评论内容"
                         align="center"
                 >
                 </el-table-column>
                 <el-table-column
-                        prop="head_pic"
-                        label="头像"
-                        align="center"
-                        width="300">
-                    <template slot-scope="scope">
-                        <div class="spic" v-if="scope.row.head_pic!==null">
-                            <img :src="scope.row.head_pic" alt="" style="border-radius: 50%;width:80px;height:80px;">
-                        </div>
-
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        prop="name"
-                        label="留言对象"
+                        prop="star"
+                        label="评论星级"
                         align="center"
                 ></el-table-column>
                 <el-table-column
-                        prop="message"
-                        label="留言内容"
+                        prop="created_at"
+                        label="评论时间"
                         align="center"
-                        >
-                </el-table-column>
-                <el-table-column
-                        prop="created_time"
-                        label="发布时间"
-                        align="center"
-                        >
+                >
                 </el-table-column>
                 <el-table-column
                         prop="checkinfo"
                         label="是否显示"
                         align="center"
-                        >
+                >
                     <template slot-scope="scope">
                         <el-switch
                                 v-model="scope.row.checkinfo"
@@ -108,13 +90,13 @@
                         label="操作"
                         align="center">
                     <template slot-scope="scope">
-<!--                        <el-button-->
-<!--                                size="mini"-->
-<!--                                type="primary"-->
-<!--                                @click="handleShow(scope.row)">查看</el-button>-->
-<!--                        <el-button-->
-<!--                                size="mini"-->
-<!--                                @click="handleEdit(scope.row)">编辑</el-button>-->
+                        <!--                        <el-button-->
+                        <!--                                size="mini"-->
+                        <!--                                type="primary"-->
+                        <!--                                @click="handleShow(scope.row)">查看</el-button>-->
+                        <!--                        <el-button-->
+                        <!--                                size="mini"-->
+                        <!--                                @click="handleEdit(scope.row)">编辑</el-button>-->
                         <el-button
                                 size="mini"
                                 type="danger"
@@ -174,85 +156,85 @@
             </div>
         </el-dialog>
 
-<!--        &lt;!&ndash;       查看图片&ndash;&gt;-->
-<!--        <el-dialog title="公告详情" :visible.sync="dialogTableVisible" >-->
-<!--            <el-form :model="form"   label-width="100px">-->
-<!--                <el-form-item label="公告标题" >-->
-<!--                    <el-input  v-model="form.title" autocomplete="off" placeholder="公告标题" :readonly="readonly"></el-input>-->
-<!--                </el-form-item>-->
+        <!--        &lt;!&ndash;       查看图片&ndash;&gt;-->
+        <!--        <el-dialog title="公告详情" :visible.sync="dialogTableVisible" >-->
+        <!--            <el-form :model="form"   label-width="100px">-->
+        <!--                <el-form-item label="公告标题" >-->
+        <!--                    <el-input  v-model="form.title" autocomplete="off" placeholder="公告标题" :readonly="readonly"></el-input>-->
+        <!--                </el-form-item>-->
 
 
-<!--                <el-form-item label="公告内容" >-->
-<!--                    <el-input  v-model="form.content"   autocomplete="off" placeholder="公告内容"  :readonly="readonly"></el-input>-->
-<!--                </el-form-item>-->
+        <!--                <el-form-item label="公告内容" >-->
+        <!--                    <el-input  v-model="form.content"   autocomplete="off" placeholder="公告内容"  :readonly="readonly"></el-input>-->
+        <!--                </el-form-item>-->
 
 
 
-<!--                <el-form-item label="发布时间" >-->
-<!--                    <el-date-picker-->
-<!--                            v-model="form.created_at"-->
-<!--                            type="datetime"-->
-<!--                            disabled-->
-<!--                            value-format="yyyy-MM-dd HH:mm:ss"-->
-<!--                            placeholder="选择日期">-->
-<!--                    </el-date-picker>-->
-<!--                </el-form-item>-->
+        <!--                <el-form-item label="发布时间" >-->
+        <!--                    <el-date-picker-->
+        <!--                            v-model="form.created_at"-->
+        <!--                            type="datetime"-->
+        <!--                            disabled-->
+        <!--                            value-format="yyyy-MM-dd HH:mm:ss"-->
+        <!--                            placeholder="选择日期">-->
+        <!--                    </el-date-picker>-->
+        <!--                </el-form-item>-->
 
 
-<!--                <el-form-item label="是否显示" >-->
-<!--                    <el-switch-->
-<!--                            v-model="form.checkinfo"-->
-<!--                            active-color="#409EFF"-->
-<!--                            inactive-color="#dcdfe6"-->
-<!--                            :active-value="activeNum"-->
-<!--                            :inactive-value="InactiveNum"-->
-<!--                            disabled-->
-<!--                    >-->
-<!--                    </el-switch>-->
-<!--                </el-form-item>-->
-<!--            </el-form>-->
-<!--            <div slot="footer" class="dialog-footer">-->
-<!--                <el-button @click="dialogTableVisible=false">取 消</el-button>-->
-<!--                <el-button type="primary" @click="dialogTableVisible=false">确 定</el-button>-->
-<!--            </div>-->
-<!--        </el-dialog>-->
+        <!--                <el-form-item label="是否显示" >-->
+        <!--                    <el-switch-->
+        <!--                            v-model="form.checkinfo"-->
+        <!--                            active-color="#409EFF"-->
+        <!--                            inactive-color="#dcdfe6"-->
+        <!--                            :active-value="activeNum"-->
+        <!--                            :inactive-value="InactiveNum"-->
+        <!--                            disabled-->
+        <!--                    >-->
+        <!--                    </el-switch>-->
+        <!--                </el-form-item>-->
+        <!--            </el-form>-->
+        <!--            <div slot="footer" class="dialog-footer">-->
+        <!--                <el-button @click="dialogTableVisible=false">取 消</el-button>-->
+        <!--                <el-button type="primary" @click="dialogTableVisible=false">确 定</el-button>-->
+        <!--            </div>-->
+        <!--        </el-dialog>-->
 
-<!--        &lt;!&ndash;      编辑图片详情&ndash;&gt;-->
-<!--        <el-dialog title="编辑公告" :visible.sync="EditdialogTableVisible" >-->
-<!--            <el-form :model="form"   label-width="100px">-->
-<!--                <el-form-item label="公告标题" >-->
-<!--                    <el-input  v-model="form.title" autocomplete="off" placeholder="请输入公告标题" ></el-input>-->
-<!--                </el-form-item>-->
+        <!--        &lt;!&ndash;      编辑图片详情&ndash;&gt;-->
+        <!--        <el-dialog title="编辑公告" :visible.sync="EditdialogTableVisible" >-->
+        <!--            <el-form :model="form"   label-width="100px">-->
+        <!--                <el-form-item label="公告标题" >-->
+        <!--                    <el-input  v-model="form.title" autocomplete="off" placeholder="请输入公告标题" ></el-input>-->
+        <!--                </el-form-item>-->
 
-<!--                <el-form-item label="公告内容" >-->
-<!--                    <el-input  v-model="form.content"   autocomplete="off" placeholder="请输入公告内容" ></el-input>-->
-<!--                </el-form-item>-->
+        <!--                <el-form-item label="公告内容" >-->
+        <!--                    <el-input  v-model="form.content"   autocomplete="off" placeholder="请输入公告内容" ></el-input>-->
+        <!--                </el-form-item>-->
 
-<!--                <el-form-item label="发布时间" >-->
-<!--                    <el-date-picker-->
-<!--                            v-model="form.created_at"-->
-<!--                            type="datetime"-->
-<!--                            value-format="yyyy-MM-dd HH:mm:ss"-->
-<!--                            placeholder="选择日期">-->
-<!--                    </el-date-picker>-->
-<!--                </el-form-item>-->
+        <!--                <el-form-item label="发布时间" >-->
+        <!--                    <el-date-picker-->
+        <!--                            v-model="form.created_at"-->
+        <!--                            type="datetime"-->
+        <!--                            value-format="yyyy-MM-dd HH:mm:ss"-->
+        <!--                            placeholder="选择日期">-->
+        <!--                    </el-date-picker>-->
+        <!--                </el-form-item>-->
 
-<!--                <el-form-item label="是否显示" >-->
-<!--                    <el-switch-->
-<!--                            v-model="form.checkinfo"-->
-<!--                            active-color="#409EFF"-->
-<!--                            inactive-color="#dcdfe6"-->
-<!--                            :active-value="activeNum"-->
-<!--                            :inactive-value="InactiveNum">-->
-<!--                    </el-switch>-->
-<!--                </el-form-item>-->
+        <!--                <el-form-item label="是否显示" >-->
+        <!--                    <el-switch-->
+        <!--                            v-model="form.checkinfo"-->
+        <!--                            active-color="#409EFF"-->
+        <!--                            inactive-color="#dcdfe6"-->
+        <!--                            :active-value="activeNum"-->
+        <!--                            :inactive-value="InactiveNum">-->
+        <!--                    </el-switch>-->
+        <!--                </el-form-item>-->
 
-<!--            </el-form>-->
-<!--            <div slot="footer" class="dialog-footer">-->
-<!--                <el-button @click="EditdialogTableVisible=false">取 消</el-button>-->
-<!--                <el-button type="primary" @click="confirmEdit">确 定</el-button>-->
-<!--            </div>-->
-<!--        </el-dialog>-->
+        <!--            </el-form>-->
+        <!--            <div slot="footer" class="dialog-footer">-->
+        <!--                <el-button @click="EditdialogTableVisible=false">取 消</el-button>-->
+        <!--                <el-button type="primary" @click="confirmEdit">确 定</el-button>-->
+        <!--            </div>-->
+        <!--        </el-dialog>-->
 
 
 
@@ -261,10 +243,10 @@
 
 <script>
     import {
-        getMessage,
+        getComment,
         editNotice,
-        changeMessage,
-        deleteMessage,
+        checkComment,
+        deleteComment,
         addNotice,
         updateNotice
     } from "../util/lang";
@@ -325,44 +307,12 @@
             },100)
         },
         methods:{
-            searchVal(){
-                const url = `${getMessage()}`
-                this.$axios.post(url,qs.stringify(
-                    {
-                        page:1,
-                        message:this.message,
-                        nickname:this.nickname,
-                        checkinfo:this.checkinfo
-                    }
-                )).then(res => {
-                    this.tableData=res.data.data.data
-                    this.totalPage=res.data.data.last_page
-                    this.Currentpage=1
-                })
-            },
-            searchVal2(val){
-                this.checkinfo=val
-                const url = `${getMessage()}`
-                this.$axios.post(url,qs.stringify(
-                    {
-                        page:1,
-                        message:this.message,
-                        nickname:this.nickname,
-                        checkinfo:val
-                    }
-                )).then(res => {
-                    console.log(res.data)
-                    this.tableData=res.data.data.data
-                    this.totalPage=res.data.data.last_page
-                    this.Currentpage=1
-                })
-            },
             shuaxin(){
                 location.reload()
             },
             // 是否显示
             changeStatus(value,id){
-                const url = `${changeMessage()}`
+                const url = `${checkComment()}`;
                 this.$axios.post(url,qs.stringify({
                     id:id,
                     checkinfo:value
@@ -379,7 +329,7 @@
             handleCurrentChange(val) {
                 if(val<=this.totalPage){
                     this.$nextTick(()=>{
-                        const url = `${getMessage()}`
+                        const url = `${getComment()}`;
                         this.$axios.post(url,qs.stringify(
                             {
                                 page:val++
@@ -398,10 +348,11 @@
             },
             // 获取全部分类数据
             getList(){
-                const url = `${getMessage()}`
+                const url = `${getComment()}`;
                 this.$axios.post(url).then(res => {
-                    this.tableData=res.data.data.data
-                    this.totalPage=res.data.data.last_page
+                    this.tableData=res.data.data.data;
+                    this.totalPage=res.data.data.last_page;
+                    console.log(this.tableData);
                     this.Currentpage=1
                 })
             },
@@ -411,12 +362,12 @@
                     content:'',
                     created_at:'',
                     checkinfo:1
-                }
+                };
                 this.AddialogTableVisible=true
             },
             handleAdd(){
-                let newForm=JSON.parse(JSON.stringify(this.form))
-                const url = `${addNotice()}`
+                let newForm=JSON.parse(JSON.stringify(this.form));
+                const url = `${addNotice()}`;
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
                         this.$message({
@@ -425,13 +376,13 @@
                         });
                         this.getList()
                     }
-                })
+                });
                 this.AddialogTableVisible=false
             },
             confirmEdit(){
-                this.EditdialogTableVisible=false
-                let newForm=JSON.parse(JSON.stringify(this.form))
-                const url = `${updateNotice()}`
+                this.EditdialogTableVisible=false;
+                let newForm=JSON.parse(JSON.stringify(this.form));
+                const url = `${updateNotice()}`;
                 this.$axios.post(url,qs.stringify(newForm)).then(res => {
                     if (res.data.code===200) {
                         this.$message({
@@ -444,7 +395,7 @@
             },
             // 删除
             delete(id) {
-                const url = `${deleteMessage(id)}`
+                const url = `${deleteComment(id)}`;
                 this.$axios.post(url)
                     .then(res => {
                         if (res.data.code===200) {
@@ -458,8 +409,8 @@
             },
             // 查看详情
             handleShow(row) {
-                this.dialogTableVisible=true
-                const url = `${editNotice(row.id)}`
+                this.dialogTableVisible=true;
+                const url = `${editNotice(row.id)}`;
                 this.$axios.post(url)
                     .then(res => {
                         if (res.data.code===200) {
@@ -470,8 +421,8 @@
             // 编辑详情
             handleEdit(row) {
                 setTimeout(()=>{
-                    this.EditdialogTableVisible=true
-                    const url = `${editNotice(row.id)}`
+                    this.EditdialogTableVisible=true;
+                    const url = `${editNotice(row.id)}`;
                     this.$axios.post(url)
                         .then(res => {
                             if (res.data.code===200) {

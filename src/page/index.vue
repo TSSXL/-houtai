@@ -142,10 +142,10 @@ export default {
           name: "科普知识",
           path: "lsm",
         },
-        // {
-        //   name: "留言",
-        //   path: "message",
-        // }
+        {
+          name: "留言",
+          path: "message",
+        }
       ]
     };
   },

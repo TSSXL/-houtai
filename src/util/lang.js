@@ -414,3 +414,22 @@ export const updateArticle = () => {
     return `${BASEURI}/Admin/updateArticle`
 };
 
+
+//获取博物馆信息
+export const getComment = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/getComment`
+};
+
+
+//修改评论状态
+export const checkComment = () => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/checkComment`
+};
+
+//删除评论
+export const deleteComment= (id) => {
+    // const language = getLanguage(lang)
+    return `${BASEURI}/Admin/deleteComment?id=${id}`
+};

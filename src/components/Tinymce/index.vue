@@ -17,7 +17,7 @@ import toolbar from './toolbar'
 import load from './dynamicLoadScript'
 
 // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
-const tinymceCDN = 'https://cdn.jsdelivr.net/npm/tinymce-all-in-one@4.9.3/tinymce.min.js';
+const tinymceCDN = 'https://cdn.jsdelivr.net/npm/tinymce-all-in-one@4.9.3/tinymce.min.js?cachebuster=123';
 
 export default {
   name: 'Tinymce',
@@ -134,6 +134,7 @@ export default {
         default_link_target: '_blank',
         link_title: false,
         nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin,
+
         content_style: "p {margin: 5px 0;}",
         fontsize_formats: "12px 14px 16px 18px 24px 36px 48px 56px 72px",
         font_formats:
