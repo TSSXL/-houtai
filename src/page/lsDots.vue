@@ -404,7 +404,7 @@
             // 修改排序
             handleChange(value,row) {
                 this.form=row;
-               this.form.orderid=value;
+                this.form.orderid=value;
                 this.confirmEdit()
             },
             handleChangeEdit(value) {
@@ -527,7 +527,7 @@
                 this.AddialogTableVisible = false
             },
             confirmEdit() {
-                if(this.form.flag!=''){
+                if(this.form.flag!='' && this.form.flag!=null){
                     this.form.flag='推荐'
                 }else{
                     this.form.flag=''
@@ -542,14 +542,14 @@
                             message: '修改成功',
                             type: 'success'
                         });
-                        const url = `${getGoods()}`;
-                        this.$axios.post(url, qs.stringify(
-                            {
-                                page: this.page
-                            }
-                        )).then(res => {
-                            this.tableData = res.data.data.data
-                        })
+                        // const url = `${getGoods()}`;
+                        // this.$axios.post(url, qs.stringify(
+                        //     {
+                        //         page: this.page
+                        //     }
+                        // )).then(res => {
+                        //     this.tableData = res.data.data.data
+                        // })
                     }
                 })
             },
