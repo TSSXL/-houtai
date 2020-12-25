@@ -194,13 +194,13 @@
                 </el-form-item>
                 <el-form-item label="展品banner">
                     <div class="pic">
-                        <img :src="`https://tyxxc.sansg.com/${form.banner}`" alt="" :key="index">
+                        <img :src="`https://tyxxc.senior2008.com/${form.banner}`" alt="" :key="index">
                     </div>
                 </el-form-item>
 
                 <el-form-item label="展品缩略图">
                     <div class="pic">
-                        <img :src="`https://tyxxc.sansg.com/${form.picurl}`" alt="" :key="index">
+                        <img :src="`https://tyxxc.senior2008.com/${form.picurl}`" alt="" :key="index">
                     </div>
                 </el-form-item>
 
@@ -425,7 +425,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "https://tyxxc.sansg.com/api/Upload";
+                    const url = "https://tyxxc.senior2008.com/api/Upload";
                     this.$axios
                         .post(url, formData, {
                             headers: {
@@ -446,7 +446,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "https://tyxxc.sansg.com/api/Upload";
+                    const url = "https://tyxxc.senior2008.com/api/Upload";
                     this.$axios
                         .post(url, formData, {
                             headers: {
@@ -609,12 +609,12 @@
                                     this.form = res.data.data
                                 }
                                 if (this.form.picurl !== null && this.form.picurl !== "") {
-                                    this.fileList4.push({url: 'https://tyxxc.sansg.com/' + this.form.picurl})
+                                    this.fileList4.push({url: 'https://tyxxc.senior2008.com/' + this.form.picurl})
                                 } else {
                                     this.fileList4 = []
                                 }
                                 if (this.form.banner !== null && this.form.banner !== "") {
-                                    this.fileList6.push({url: 'https://tyxxc.sansg.com/' + this.form.banner})
+                                    this.fileList6.push({url: 'https://tyxxc.senior2008.com/' + this.form.banner})
                                 } else {
                                     this.fileList6 = []
                                 }

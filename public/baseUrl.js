@@ -1,4 +1,4 @@
-const webUrl="https://tyxxc.sansg.com/";
+const webUrl="https://tyxxc.senior2008.com/";
 export {webUrl}
 
 

@@ -57,7 +57,7 @@
                         width="200">
                     <template slot-scope="scope">
                         <div class="spic" v-if="scope.row.picurl!==null">
-                            <img :src="`https://tyxxc.sansg.com/${scope.row.picurl}`" alt="">
+                            <img :src="`https://tyxxc.senior2008.com/${scope.row.picurl}`" alt="">
                         </div>
 
                     </template>
@@ -252,13 +252,13 @@
 
                 <el-form-item label="陵园banner" >
                     <div class="pic">
-                        <img  :src="`https://tyxxc.sansg.com/${form.banner}`" alt="" :key="index">
+                        <img  :src="`https://tyxxc.senior2008.com/${form.banner}`" alt="" :key="index">
                     </div>
                 </el-form-item>
 
                 <el-form-item label="陵园缩略图" >
                     <div class="pic">
-                        <img  :src="`https://tyxxc.sansg.com/${form.picurl}`" alt="" :key="index">
+                        <img  :src="`https://tyxxc.senior2008.com/${form.picurl}`" alt="" :key="index">
                     </div>
                 </el-form-item>
 
@@ -297,7 +297,7 @@
                                     <div class="oItem">
                                         <span>实景照片</span>
                                         <div class="s2">
-                                            <img :src="`https://tyxxc.sansg.com/${item.spic}`" alt="">
+                                            <img :src="`https://tyxxc.senior2008.com/${item.spic}`" alt="">
                                         </div>
                                     </div>
                                     <div class="oItem">
@@ -425,7 +425,7 @@
                                                     :auto-upload="false"
                                                     :on-remove="handleRemove3"
                                             >
-                                                <img v-if="item.spic!==''"  :src="`https://tyxxc.sansg.com/${item.spic}`" class="avatar">
+                                                <img v-if="item.spic!==''"  :src="`https://tyxxc.senior2008.com/${item.spic}`" class="avatar">
                                             </el-upload>
 <!--                                            <i class="el-icon-close" @click="handleRemove3"></i>-->
                                         </div>
@@ -708,7 +708,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "https://tyxxc.sansg.com/api/Upload";
+                    const url = "https://tyxxc.senior2008.com/api/Upload";
                     this.$axios
                         .post(url, formData, {
                             headers: {
@@ -730,7 +730,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "https://tyxxc.sansg.com/api/Upload";
+                    const url = "https://tyxxc.senior2008.com/api/Upload";
                     this.$axios
                         .post(url, formData, {
                             headers: {
@@ -751,7 +751,7 @@
                 } else {
                     const formData = new FormData(); // 声明一个FormData对象
                     formData.append("file", file.raw);
-                    const url = "https://tyxxc.sansg.com/api/Upload";
+                    const url = "https://tyxxc.senior2008.com/api/Upload";
                     this.$axios
                         .post(url, formData, {
                             headers: {
