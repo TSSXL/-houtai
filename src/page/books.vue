@@ -46,6 +46,15 @@
                     </template>
                 </el-table-column>
                 <el-table-column
+                        prop="orderid"
+                        label="排序"
+                        align="center"
+                        width="250">
+                    <template slot-scope="scope">
+                        <el-input-number v-model="scope.row.orderid" controls-position="right"  @change="((value)=>{handleChange(value, scope.row)})" :min="1" :max="10000"></el-input-number>
+                    </template>
+                </el-table-column>
+                <el-table-column
                         label="操作"
                         align="center">
                     <template slot-scope="scope">
@@ -98,6 +107,10 @@
                     </el-upload>
                 </el-form-item>
 
+                <el-form-item label="排序" >
+                    <el-input-number type="number" v-model="form.orderid" controls-position="right" @change="handleChangeEdit" :min="1" :max="10000"></el-input-number>
+                </el-form-item>
+
 
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -120,6 +133,10 @@
                     <div class="pic">
                         <img  :src="`https://tyxxc.senior2008.com/${form.picurl}`" alt="" :key="index">
                     </div>
+                </el-form-item>
+
+                <el-form-item label="排序" >
+                    <el-input-number type="number" v-model="form.orderid" controls-position="right"  :min="1" :max="10000"  :disabled="readonly"></el-input-number>
                 </el-form-item>
 
 
@@ -155,6 +172,9 @@
                     </el-upload>
                 </el-form-item>
 
+                <el-form-item label="排序" >
+                    <el-input-number type="number" v-model="form.orderid" controls-position="right" @change="handleChangeEdit" :min="1" :max="10000"></el-input-number>
+                </el-form-item>
 
 
 
@@ -227,6 +247,27 @@
             },100)
         },
         methods:{
+            handleChangeEdit(value){
+                this.form.orderid=value
+            },
+            // 修改排序
+            handleChange(value,row) {
+                const url = `${updateType()}`;
+                this.$axios.post(url,qs.stringify({
+                    title:row.title,
+                    id:row.id,
+                    picurl: row.picurl,
+                    orderid:row.orderid
+                })).then(res => {
+                    if (res.data.code===200) {
+                        this.$message({
+                            message: '修改成功',
+                            type: 'success'
+                        });
+                        this.getList()
+                    }
+                })
+            },
             handleUploadChange(file) {
                 const isLt2M = file.size / 1024 / 1024 < 2;
                 if (!isLt2M) {
