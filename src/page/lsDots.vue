@@ -381,6 +381,7 @@
             //     })
             // },
             changeList(val) {
+                this.type=val;
                 const url = `${getGoods()}`;
                 this.$axios.post(url, qs.stringify(
                     {
@@ -542,14 +543,15 @@
                             message: '修改成功',
                             type: 'success'
                         });
-                        // const url = `${getGoods()}`;
-                        // this.$axios.post(url, qs.stringify(
-                        //     {
-                        //         page: this.page
-                        //     }
-                        // )).then(res => {
-                        //     this.tableData = res.data.data.data
-                        // })
+                        const url = `${getGoods()}`;
+                        this.$axios.post(url, qs.stringify(
+                            {
+                                page: this.page,
+                                type: this.type
+                            }
+                        )).then(res => {
+                            this.tableData = res.data.data.data
+                        })
                     }
                 })
             },
